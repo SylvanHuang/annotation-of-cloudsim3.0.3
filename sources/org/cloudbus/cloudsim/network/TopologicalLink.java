@@ -9,7 +9,7 @@
 package org.cloudbus.cloudsim.network;
 
 /**
- * 网络拓扑中的
+ * 网络拓扑中的边，包含的信息有边的源node，目的node，带宽，延迟
  * This class represents an link (edge) from an graph
  * 
  * @author Thomas Hohnstein

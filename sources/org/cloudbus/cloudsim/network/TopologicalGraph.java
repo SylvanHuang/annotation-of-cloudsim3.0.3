@@ -13,7 +13,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * 网络拓扑图的数据结构
+ * 网络拓扑图的数据结构:
+ * 	在 TopologicalGraph 通过readGraphFile方法，将文件中的描述，转化为网络拓扑模型。
+ * 接着用刚才独到的网络拓扑，生成一个是实体间的时延矩阵和带宽矩阵。generateMatrices()和
+ * createBwMatrix()  ,其中时延矩阵是根据FloydWarshall来求出最短路径之后，得出的
+ *
  * This class represents an graph containing nodes and edges, used for input with an network-layer
  * Graphical-Output Restricions! EdgeColors: GraphicalProperties.getColorEdge NodeColors:
  * GraphicalProperties.getColorNode

@@ -39,7 +39,7 @@ import org.cloudbus.cloudsim.provisioners.RamProvisionerSimple;
 import org.cloudbus.cloudsim.util.MathUtil;
 
 /**
- * The Class Helper.
+ * The Class Helper. 主要进行虚拟机，主机列表，数据中心和数据中心管理者的创建
  * 
  * If you are using any algorithms, policies or workload included in the power package, please cite
  * the following paper:
