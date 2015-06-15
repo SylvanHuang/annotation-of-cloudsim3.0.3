@@ -5,6 +5,7 @@ import org.cloudbus.cloudsim.power.models.PowerModelSpecPowerHpProLiantMl110G4Xe
 import org.cloudbus.cloudsim.power.models.PowerModelSpecPowerHpProLiantMl110G5Xeon3075;
 
 /**
+ * Power中需要使用的常量
  * If you are using any algorithms, policies or workload included in the power package, please cite
  * the following paper:
  *
