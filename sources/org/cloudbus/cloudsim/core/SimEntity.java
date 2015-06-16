@@ -55,7 +55,7 @@ public abstract class SimEntity implements Cloneable {
 	 */
 
 	/**
-	 * Creates a new entity.
+	 * 一个实体在创建的时候就被add到CloudSim的entities中了 Creates a new entity.
 	 * 
 	 * @param name the name to be associated with this entity
 	 */
@@ -66,7 +66,7 @@ public abstract class SimEntity implements Cloneable {
 		this.name = name;
 		id = -1;
 		state = RUNNABLE;
-		CloudSim.addEntity(this);
+		CloudSim.addEntity(this);/*而在add的时候，已经改变了相应的ID，是根据entities列表中当前元素的个数来确定的*/
 	}
 
 	/**

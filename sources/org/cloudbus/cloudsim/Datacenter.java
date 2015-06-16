@@ -1033,6 +1033,7 @@ public class Datacenter extends SimEntity {
 			gisID = CloudSim.getCloudInfoServiceEntityId();
 		}
 
+		// 产生了第一个事件，向CloudInformationService注册， 这个事件将首先被发送到future队列 
 		// send the registration to GIS
 		sendNow(gisID, CloudSimTags.REGISTER_RESOURCE, getId());
 		// Below method is for a child class to override

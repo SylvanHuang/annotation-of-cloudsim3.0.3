@@ -70,7 +70,7 @@ public class CloudSimExample1 {
 			Calendar calendar = Calendar.getInstance();
 			boolean trace_flag = false; // mean trace events
 
-			// Initialize the CloudSim library
+			// 包含CloudSim的一些属性的初始化 Initialize the CloudSim library
 			CloudSim.init(num_user, calendar, trace_flag);
 
 			// 2，Second step: Create Datacenters

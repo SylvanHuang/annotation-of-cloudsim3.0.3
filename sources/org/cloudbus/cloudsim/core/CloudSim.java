@@ -78,7 +78,7 @@ public class CloudSim {
 	 */
 	private static void initCommonVariable(Calendar _calendar, boolean _traceFlag, int numUser)
 			throws Exception {
-		initialize();
+		initialize();//包含未来队列等的初始化
 		// NOTE: the order for the below 3 lines are important
 		traceFlag = _traceFlag;
 
@@ -513,7 +513,7 @@ public class CloudSim {
 		boolean queue_empty;
 		
 		int entities_size = entities.size();
-
+		//一次遍历每一个实体；在这里其实是如果是RUNNABLE的实体，表明状态不是结束，则应该去延迟队列检查是否有时间需要执行
 		for (int i = 0; i < entities_size; i++) {
 			ent = entities.get(i);
 			if (ent.getState() == SimEntity.RUNNABLE) {
@@ -521,13 +521,13 @@ public class CloudSim {
 			}
 		}
 				
-		// If there are more future events then deal with them
+		// 将未来队列中的事件移除到延迟事件队列中 If there are more future events then deal with them
 		if (future.size() > 0) {
 			List<SimEvent> toRemove = new ArrayList<SimEvent>();
 			Iterator<SimEvent> fit = future.iterator();
 			queue_empty = false;
 			SimEvent first = fit.next();
-			processEvent(first);
+			processEvent(first);//CloudSim自身的processEvent会将时间移入延迟队列中
 			future.remove(first);
 
 			fit = future.iterator();
@@ -812,7 +812,7 @@ public class CloudSim {
 	 */
 	public static void runStart() {
 		running = true;
-		// Start all the entities
+		// 注意每一个实体是在创建的时候就被add到CloudSim的entities中了 Start all the entities
 		for (SimEntity ent : entities) {
 			ent.startEntity();
 		}
@@ -878,9 +878,10 @@ public class CloudSim {
 	 */
 	public static double run() {
 		if (!running) {
-			runStart();
+			runStart();	//开始模拟过
 		}
 		while (true) {
+			//runClockTick()涉及了事件的处理
 			if (runClockTick() || abruptTerminate) {
 				break;
 			}
