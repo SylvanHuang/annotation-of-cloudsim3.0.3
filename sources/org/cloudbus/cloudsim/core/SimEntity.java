@@ -36,11 +36,18 @@ public abstract class SimEntity implements Cloneable {
 	/** The id. */
 	private int id;
 
-	/** The buffer for selected incoming events. */
+	/** 事件buffer，用于缓冲将来被选定的事件 The buffer for selected incoming events. */
 	private SimEvent evbuf;
 
-	/** The entity's current state. */
+	/** 实体当前的状态 The entity's current state. */
 	private int state;
+	/**
+	 * 有四种状态，分别如下
+	 * 	RUNNABLE
+	 * 	WAITING
+	 * 	HOLDING
+	 * 	FINISHED
+	 */
 
 	/**
 	 * Creates a new entity.
@@ -78,6 +85,7 @@ public abstract class SimEntity implements Cloneable {
 	// The schedule functions
 
 	/**
+	 * 向另外一个实体发送事件
 	 * Send an event to another entity by id number, with data. Note that the tag <code>9999</code>
 	 * is reserved.
 	 * 
