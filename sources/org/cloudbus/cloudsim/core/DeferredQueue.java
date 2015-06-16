@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
+ * 延迟事件队列，所有的事件必须经过从future队列中移除之后，进入延迟事件队列，才能被各个实体进行处理来完成相应的任务
  * This class implements the deferred event queue used by {@link Simulation}. The event queue uses a
  * linked list to store the events.
  * 

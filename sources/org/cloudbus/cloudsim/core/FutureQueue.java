@@ -14,6 +14,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
+ * 未来事件队列，维护着所有新产生的事件
  * This class implements the future event queue used by {@link Simulation}. The event queue uses a
  * {@link TreeSet} in order to store the events.
  * 
