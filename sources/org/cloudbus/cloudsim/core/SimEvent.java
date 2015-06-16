@@ -9,6 +9,7 @@
 package org.cloudbus.cloudsim.core;
 
 /**
+ * 事件实体
  * This class represents a simulation event which is passed between the entities in the simulation.
  * 
  * @author Costas Simatos
@@ -17,25 +18,25 @@ package org.cloudbus.cloudsim.core;
  */
 public class SimEvent implements Cloneable, Comparable<SimEvent> {
 
-	/** internal event type **/
+	/** 内部事件类型 internal event type **/
 	private final int etype;
 
-	/** time at which event should occur **/
+	/** 事件发生的时间 time at which event should occur **/
 	private final double time;
 
 	/** time that the event was removed from the queue for service **/
 	private double endWaitingTime;
 
-	/** id of entity who scheduled event **/
+	/** 事件发送实体的ID id of entity who scheduled event **/
 	private int entSrc;
 
-	/** id of entity event will be sent to **/
+	/** 事件发送给的对端实体的ID id of entity event will be sent to **/
 	private int entDst;
 
-	/** the user defined type of the event **/
+	/** 用户定义的事件类型 the user defined type of the event **/
 	private final int tag;
 
-	/** any data the event is carrying **/
+	/** 事件携带的数据 any data the event is carrying **/
 	private final Object data;
 
 	private long serial = -1;
@@ -51,7 +52,7 @@ public class SimEvent implements Cloneable, Comparable<SimEvent> {
 	public static final int CREATE = 3;
 
 	/**
-	 * Create a blank event.
+	 * 创建空事件 Create a blank event.
 	 */
 	public SimEvent() {
 		etype = ENULL;
@@ -87,7 +88,7 @@ public class SimEvent implements Cloneable, Comparable<SimEvent> {
 	}
 
 	/**
-	 * Used to set the time at which this event finished waiting in the event
+	 * 设置事件在队列中等待的时间，超出这个时间，将时间从队列中移除 Used to set the time at which this event finished waiting in the event
 	 * 
 	 * @param end_waiting_time
 	 */
