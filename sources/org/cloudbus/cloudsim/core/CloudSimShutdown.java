@@ -11,6 +11,7 @@ package org.cloudbus.cloudsim.core;
 import java.util.Calendar;
 
 /**
+ * 该实体类主要是等待所有终端用户和代理实体的结束，然后发送仿真结束信号给CIS
  * CloudimShutdown waits for termination of all CloudSim user entities to determine the end of
  * simulation. This class will be created by CloudSim upon initialisation of the simulation, i.e.
  * done via <tt>CloudSim.init()</tt> method. Hence, do not need to worry about creating an object of

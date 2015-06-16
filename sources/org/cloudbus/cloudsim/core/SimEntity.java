@@ -13,6 +13,11 @@ import org.cloudbus.cloudsim.NetworkTopology;
 import org.cloudbus.cloudsim.core.predicates.Predicate;
 
 /**
+ * 这是一个抽象类，负责发送消息给其他实体以及处理接收的消息如放弃或处理事件。
+ * 所有的实体都必须扩展该类和重写它的三个核心方法：startEntity(),
+ * processEvent()和shutdownEntity(),用来处理实体初始化、事
+ * 件处理和实体销毁等行为。SimEntity类提供了调度新事件和发送消息给其他
+ * 实体的功能，其中网络延时根据BRITE模型计算。一旦创建了，实体自动地与CIS注册。
  * This class represents a simulation entity. An entity handles events and can send events to other
  * entities. When this class is extended, there are a few methods that need to be implemented:
  * <ul>

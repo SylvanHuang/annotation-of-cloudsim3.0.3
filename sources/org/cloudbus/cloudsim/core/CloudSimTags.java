@@ -9,6 +9,7 @@
 package org.cloudbus.cloudsim.core;
 
 /**
+ * 这个类包含了多个静态事件/命令标签，用来指出当接收或发送事件时需由CloudSim实体承担的行为类型。
  * Contains various static command tags that indicate a type of action that needs to be undertaken
  * by CloudSim entities when they receive or send events. <b>NOTE:</b> To avoid conflicts with other
  * tags, CloudSim reserves negative numbers, 0 - 299, and 9600.
