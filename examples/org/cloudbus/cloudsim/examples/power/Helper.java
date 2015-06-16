@@ -63,6 +63,7 @@ public class Helper {
 	 */
 	public static List<Vm> createVmList(int brokerId, int vmsNumber) {
 		List<Vm> vms = new ArrayList<Vm>();
+		//大致的随机生成一些VM，VM所拥有的配置不特别相同
 		for (int i = 0; i < vmsNumber; i++) {
 			int vmType = i / (int) Math.ceil((double) vmsNumber / Constants.VM_TYPES);
 			vms.add(new PowerVm(

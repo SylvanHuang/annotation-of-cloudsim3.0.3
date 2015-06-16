@@ -65,6 +65,7 @@ public class NetworkTopology {
 		try {
 			graph = reader.readGraphFile(fileName);
 			map = new HashMap<Integer, Integer>();
+			// 生成相应的带宽矩阵和延迟矩阵
 			generateMatrices();
 		} catch (IOException e) {
 			// problem with the file. Does not simulate network
@@ -171,7 +172,7 @@ public class NetworkTopology {
 	 * @post $none
 	 */
 	public static void mapNode(int cloudSimEntityID, int briteID) {
-		if (networkEnabled) {
+		if (networkEnabled) {//networkEnabled default value false. It have been set the value with true at the invoking of function of buildNetworkTopology
 			try {
 				// this CloudSim entity was already mapped?
 				if (!map.containsKey(cloudSimEntityID)) {
