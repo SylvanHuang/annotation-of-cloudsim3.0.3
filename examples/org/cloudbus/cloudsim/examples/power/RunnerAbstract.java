@@ -158,6 +158,7 @@ public abstract class RunnerAbstract {
 		System.out.println("Starting " + experimentName);
 
 		try {
+			// 创建数据中心
 			PowerDatacenter datacenter = (PowerDatacenter) Helper.createDatacenter(
 					"Datacenter",
 					PowerDatacenter.class,
