@@ -14,16 +14,18 @@ import org.cloudbus.cloudsim.Vm;
 
 /**
  * PE的供给策略 The Class PeProvisioner.
+ * 	其中一个PePrivisioner同时包含了，它所拥有的，按照这种策略支配的处理能力。一个host不直接包含PE对象，而是包含了一个PeProvisioner的列表
+ * 这样对于同一台主机，可以实现不同部分的处理能力，拥有不同的处理能力的分配策略。
  * 
  * @author Anton Beloglazov
  * @since CloudSim Toolkit 2.0
  */
 public abstract class PeProvisioner {
 
-	/** PE的处理能力 （单位Million Instructions Per Second 每秒百万条指令）The mips. */
+	/** 总的处理能力 （单位Million Instructions Per Second 每秒百万条指令）The mips. */
 	private double mips;
 
-	/** 剩余的PE处理能力The available mips. */
+	/** 剩余的处理能力The available mips. */
 	private double availableMips;
 
 	/**
