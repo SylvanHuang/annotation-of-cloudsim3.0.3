@@ -32,7 +32,7 @@ public class Cloudlet {
 	private int userId;
 
 	/**
-	 * The size of this Cloudlet to be executed in a CloudResource (unit: in MI).
+	 * 一个CloudResorce中要运行的cloudlet的大小（单位：MI）  The size of this Cloudlet to be executed in a CloudResource (unit: in MI).
 	 */
 	private long cloudletLength;
 
@@ -40,12 +40,13 @@ public class Cloudlet {
 	 * The input file size of this Cloudlet before execution (unit: in byte). in byte = program +
 	 * input data size
 	 */
+	//执行前cloudlet的输入文件大小（单位：字节）  
 	private final long cloudletFileSize;
 
 	/** The output file size of this Cloudlet after execution (unit: in byte). */
 	private final long cloudletOutputSize;
 
-	/** The num of Pe required to execute this job. */
+	/** 执行任务需要的处理单元个数 The num of Pe required to execute this job. */
 	private int numberOfPes;
 
 	/** The cloudlet ID. */
@@ -57,7 +58,7 @@ public class Cloudlet {
 	/** The format of decimal numbers. */
 	private DecimalFormat num;
 
-	/** The time where this Cloudlet completes. */
+	/** cloudset完成的时间  The time where this Cloudlet completes. */
 	private double finishTime;
 
 	/**
@@ -65,27 +66,29 @@ public class Cloudlet {
 	 * RESUMED, this attribute only stores the latest execution time. Previous execution time are
 	 * ignored.
 	 */
+	//该cloudlet的执行开始时间  
+    //由于有像CANCEL, PAUSED, RESUMED这样的新功能，该属性仅存储最近开始时间。先前的执行时间被忽略。
 	private double execStartTime;
 
 	/** The ID of a reservation made for this cloudlet. */
 	private int reservationId = -1;
 
-	/** The records the transaction history for this Cloudlet. */
+	/** T//是否保存该cloudlet的事务历史记录 he records the transaction history for this Cloudlet. */
 	private final boolean record;
 
 	/** The newline. */
 	private String newline;
 
-	/** The history. */
+	/** 历史记录 The history. */
 	private StringBuffer history;
 
-	/** The res list. */
+	/** 资源列表 The res list. */
 	private final List<Resource> resList;
 
-	/** The index. */
+	/** 索引 The index. */
 	private int index;
 
-	/** The class type of Cloudlet for resource scheduling. */
+	/** 资源调度方式 The class type of Cloudlet for resource scheduling. */
 	private int classType;
 
 	/** The ToS for sending Cloudlet over the network. */

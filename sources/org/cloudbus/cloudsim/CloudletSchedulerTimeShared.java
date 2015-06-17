@@ -13,6 +13,7 @@ import java.util.List;
 import org.cloudbus.cloudsim.core.CloudSim;
 
 /**
+ * 实现timeshared的调度
  * CloudletSchedulerTimeShared implements a policy of scheduling performed by a virtual machine.
  * Cloudlets execute time-shared in VM.
  * 
@@ -22,16 +23,16 @@ import org.cloudbus.cloudsim.core.CloudSim;
  */
 public class CloudletSchedulerTimeShared extends CloudletScheduler {
 
-	/** The cloudlet exec list. */
+	/** 执行列表The cloudlet exec list. */
 	private List<? extends ResCloudlet> cloudletExecList;
 
-	/** The cloudlet paused list. */
+	/** 暂停列表The cloudlet paused list. */
 	private List<? extends ResCloudlet> cloudletPausedList;
 
-	/** The cloudlet finished list. */
+	/** 完成列表The cloudlet finished list. */
 	private List<? extends ResCloudlet> cloudletFinishedList;
 
-	/** The current cp us. */
+	/** 当前CPU数 The current cp us. */
 	protected int currentCPUs;
 
 	/**
@@ -64,20 +65,23 @@ public class CloudletSchedulerTimeShared extends CloudletScheduler {
 		setCurrentMipsShare(mipsShare);
 		double timeSpam = currentTime - getPreviousTime();
 
+		// 更新正在执行的任务列表中的所有任务的进度条
 		for (ResCloudlet rcl : getCloudletExecList()) {
 			rcl.updateCloudletFinishedSoFar((long) (getCapacity(mipsShare) * timeSpam * rcl.getNumberOfPes() * Consts.MILLION));
 		}
-
+		
+		// 更新previousTime
 		if (getCloudletExecList().size() == 0) {
 			setPreviousTime(currentTime);
 			return 0.0;
 		}
 
-		// check finished cloudlets
+		// 检查完成的cloudset check finished cloudlets
 		double nextEvent = Double.MAX_VALUE;
 		List<ResCloudlet> toRemove = new ArrayList<ResCloudlet>();
 		for (ResCloudlet rcl : getCloudletExecList()) {
 			long remainingLength = rcl.getRemainingCloudletLength();
+			// 如果任务还需时间为零，则表明已经完成了
 			if (remainingLength == 0) {// finished: remove from the list
 				toRemove.add(rcl);
 				cloudletFinish(rcl);
@@ -86,10 +90,11 @@ public class CloudletSchedulerTimeShared extends CloudletScheduler {
 		}
 		getCloudletExecList().removeAll(toRemove);
 
-		// estimate finish time of cloudlets
+		// 评估云任务的完成时间 estimate finish time of cloudlets
 		for (ResCloudlet rcl : getCloudletExecList()) {
 			double estimatedFinishTime = currentTime
 					+ (rcl.getRemainingCloudletLength() / (getCapacity(mipsShare) * rcl.getNumberOfPes()));
+			// 如果评估剩余时间小于两个事件的最小间隔
 			if (estimatedFinishTime - currentTime < CloudSim.getMinTimeBetweenEvents()) {
 				estimatedFinishTime = currentTime + CloudSim.getMinTimeBetweenEvents();
 			}
@@ -98,7 +103,7 @@ public class CloudletSchedulerTimeShared extends CloudletScheduler {
 				nextEvent = estimatedFinishTime;
 			}
 		}
-
+		//更新previousTime
 		setPreviousTime(currentTime);
 		return nextEvent;
 	}

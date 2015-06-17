@@ -11,6 +11,8 @@ package org.cloudbus.cloudsim;
 import org.cloudbus.cloudsim.core.CloudSim;
 
 /**
+ * 表示cloudlet提交到一个cloudresource，这个类跟踪这个cloudlet在资源中的所有活动。
+ * 其中字段多数和cloudlet是重复的
  * CloudSim ResCloudlet represents a Cloudlet submitted to CloudResource for processing. This class
  * keeps track the time for all activities in the CloudResource for a specific Cloudlet. Before a
  * Cloudlet exits the CloudResource, it is RECOMMENDED to call this method
@@ -25,17 +27,17 @@ import org.cloudbus.cloudsim.core.CloudSim;
  * @since CloudSim Toolkit 1.0
  */
 public class ResCloudlet {
-
-	/** The Cloudlet object. */
+	
+	/** 云任务对象The Cloudlet object. */
 	private final Cloudlet cloudlet;
 
-	/** The Cloudlet arrival time for the first time. */
+	/** 云任务到达的时间 The Cloudlet arrival time for the first time. */
 	private double arrivalTime;
 
-	/** The estimation of Cloudlet finished time. */
+	/** 评估的完成时间 The estimation of Cloudlet finished time. */
 	private double finishedTime;
 
-	/** The length of Cloudlet finished so far. */
+	/** 完成进度条The length of Cloudlet finished so far. */
 	private long cloudletFinishedSoFar;
 
 	/**

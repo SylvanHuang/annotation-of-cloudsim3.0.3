@@ -11,6 +11,7 @@ package org.cloudbus.cloudsim;
 import java.util.List;
 
 /**
+ * 表示VM执行的调度策略的抽象类。所以，继承该类的类必须执行cloudlet。同时，cloudlet的管理接口在该类实现。
  * CloudletScheduler is an abstract class that represents the policy of scheduling performed by a
  * virtual machine. So, classes extending this must execute Cloudlets. Also, the interface for
  * cloudlet management is also implemented in this class.
@@ -21,10 +22,10 @@ import java.util.List;
  */
 public abstract class CloudletScheduler {
 
-	/** The previous time. */
+	/** 先前的时间The previous time. */
 	private double previousTime;
 
-	/** The current mips share. */
+	/** 当前共享的处理器资源列表 The current mips share. */
 	private List<Double> currentMipsShare;
 
 	/**
@@ -39,7 +40,7 @@ public abstract class CloudletScheduler {
 	}
 
 	/**
-	 * Updates the processing of cloudlets running under management of this scheduler.
+	 * 更新调度器下面管理的cloudset的处理 Updates the processing of cloudlets running under management of this scheduler.
 	 * 
 	 * @param currentTime current simulation time
 	 * @param mipsShare array with MIPS share of each processor available to the scheduler
