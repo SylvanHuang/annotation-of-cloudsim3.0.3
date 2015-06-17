@@ -11,7 +11,8 @@ package org.cloudbus.cloudsim;
 import org.cloudbus.cloudsim.provisioners.PeProvisioner;
 
 /**
- * PE，处理单元，它的定义是依据 MIPS值
+ * PE，一个PE代表一个处理单元（可以理解为一个核心），每一个处理单元包含一个PeProvisioner，
+ * 而PeProvisioner则包含了相应的处理资源的大小和处理资源分配策略的打包
  * CloudSim Pe (Processing Element) class represents CPU unit, defined in terms of Millions
  * Instructions Per Second (MIPS) rating.<br>
  * <b>ASSUMPTION:<b> All PEs under the same Machine have the same MIPS rating.

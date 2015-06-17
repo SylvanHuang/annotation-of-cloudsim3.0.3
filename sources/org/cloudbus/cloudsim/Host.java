@@ -193,6 +193,7 @@ public class Host {
 	}
 
 	/**
+	 * 在物理机上面创建虚拟机
 	 * Allocates PEs and memory to a new VM in the Host.
 	 * 
 	 * @param vm Vm being started
@@ -201,25 +202,28 @@ public class Host {
 	 * @post $none
 	 */
 	public boolean vmCreate(Vm vm) {
+		// 判断存储资源是不是足够
 		if (getStorage() < vm.getSize()) {
 			Log.printLine("[VmScheduler.vmCreate] Allocation of VM #" + vm.getId() + " to Host #" + getId()
 					+ " failed by storage");
 			return false;
 		}
 
+		// 内存分配
 		if (!getRamProvisioner().allocateRamForVm(vm, vm.getCurrentRequestedRam())) {
 			Log.printLine("[VmScheduler.vmCreate] Allocation of VM #" + vm.getId() + " to Host #" + getId()
 					+ " failed by RAM");
 			return false;
 		}
-
+		// 带宽分配
 		if (!getBwProvisioner().allocateBwForVm(vm, vm.getCurrentRequestedBw())) {
 			Log.printLine("[VmScheduler.vmCreate] Allocation of VM #" + vm.getId() + " to Host #" + getId()
 					+ " failed by BW");
+			// 带宽分配失败，记得将上面分配的内存还回去
 			getRamProvisioner().deallocateRamForVm(vm);
 			return false;
 		}
-
+		// 
 		if (!getVmScheduler().allocatePesForVm(vm, vm.getCurrentRequestedMips())) {
 			Log.printLine("[VmScheduler.vmCreate] Allocation of VM #" + vm.getId() + " to Host #" + getId()
 					+ " failed by MIPS");
