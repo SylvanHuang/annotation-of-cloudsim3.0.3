@@ -9,6 +9,8 @@
 package org.cloudbus.cloudsim.power.models;
 
 /**
+ * 线性能耗模型：The more information we can reference the chapter 5.2 with power model of the fellow paper at the page 11th.
+ * 	具体的计算方法可以参考函数getPower的实现。 
  * The Class PowerModelLinear.
  * 
  * If you are using any algorithms, policies or workload included in the power package, please cite
@@ -29,7 +31,7 @@ public class PowerModelLinear implements PowerModel {
 	/** The max power. */
 	private double maxPower;
 
-	/** The constant. */
+	/** 线性能耗模型的斜率 (maxPower - getStaticPower()) / 100 The constant. */
 	private double constant;
 
 	/** The static power. */
@@ -48,7 +50,7 @@ public class PowerModelLinear implements PowerModel {
 	}
 
 	/*
-	 * (non-Javadoc)
+	 * (non-Javadoc) utilitztion是当前的使用率，具体的能耗计算方法getStaticPower() + getConstant() * utilization * 100;
 	 * @see cloudsim.power.PowerModel#getPower(double)
 	 */
 	@Override
