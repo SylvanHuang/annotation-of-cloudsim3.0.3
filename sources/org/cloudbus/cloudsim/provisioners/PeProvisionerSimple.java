@@ -54,10 +54,12 @@ public class PeProvisionerSimple extends PeProvisioner {
 	 */
 	@Override
 	public boolean allocateMipsForVm(String vmUid, double mips) {
+		// 可用处理能力比请求需要的处理能力小，请求失败
 		if (getAvailableMips() < mips) {
 			return false;
 		}
 
+		//
 		List<Double> allocatedMips;
 
 		if (getPeTable().containsKey(vmUid)) {

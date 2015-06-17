@@ -40,6 +40,7 @@ public abstract class PeProvisioner {
 	}
 
 	/**
+	 * 把处理能力分配给VM
 	 * Allocates MIPS for a given VM.
 	 * 
 	 * @param vm virtual machine for which the MIPS are being allocated
