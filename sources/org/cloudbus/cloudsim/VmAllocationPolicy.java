@@ -12,7 +12,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 虚拟机分配策略：将虚拟机分配到物理主机的策略（将物理机分配给虚拟机的策略）
+ * 虚拟机分配策略：将虚拟机分配到物理主机的策略（将物理机分配给虚拟机的策略）,这里只负责分配虚拟机所需的处理器资源大小。
+ * 但是虚拟机具体所需的处理器资源在物理机的分配和执行情况在VmScheduler中实现
+ * 
  * 	包含两步：1，预约物理主机 2，提交给用户
  * VmAllocationPolicy is an abstract class that represents the provisioning policy of hosts to
  * virtual machines in a Datacentre. It supports two-stage commit of reservation of hosts: first, we

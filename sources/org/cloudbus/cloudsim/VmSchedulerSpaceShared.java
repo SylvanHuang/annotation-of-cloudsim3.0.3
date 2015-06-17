@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 空间共享分配策略：
+ * 	如果有空闲的处理单元，则分配给虚拟机
  * VmSchedulerSpaceShared is a VMM allocation policy that allocates one or more Pe to a VM, and
  * doesn't allow sharing of PEs. If there is no free PEs to the VM, allocation fails. Free PEs are
  * not allocated to VMs
@@ -25,10 +27,10 @@ import java.util.Map;
  */
 public class VmSchedulerSpaceShared extends VmScheduler {
 
-	/** Map containing VM ID and a vector of PEs allocated to this VM. */
+	/** 虚拟机ID和分配给虚拟机的PE列表的映射 Map containing VM ID and a vector of PEs allocated to this VM. */
 	private Map<String, List<Pe>> peAllocationMap;
 
-	/** The free pes vector. */
+	/** 空闲的处理单元列表 The free pes vector. */
 	private List<Pe> freePes;
 
 	/**
@@ -51,6 +53,7 @@ public class VmSchedulerSpaceShared extends VmScheduler {
 	@Override
 	public boolean allocatePesForVm(Vm vm, List<Double> mipsShare) {
 		// if there is no enough free PEs, fails
+		//如果没有足够的处理单元，分配失败
 		if (getFreePes().size() < mipsShare.size()) {
 			return false;
 		}
@@ -59,7 +62,9 @@ public class VmSchedulerSpaceShared extends VmScheduler {
 		Iterator<Pe> peIterator = getFreePes().iterator();
 		Pe pe = peIterator.next();
 		double totalMips = 0;
+		//从空闲的处理单元中选择出有足够处理能力的
 		for (Double mips : mipsShare) {
+			// 比较处理单元的的处理资源是否足够
 			if (mips <= pe.getMips()) {
 				selectedPes.add(pe);
 				if (!peIterator.hasNext()) {
@@ -69,10 +74,11 @@ public class VmSchedulerSpaceShared extends VmScheduler {
 				totalMips += mips;
 			}
 		}
+		// 没有找到足够的处理单元数，则分配失败
 		if (mipsShare.size() > selectedPes.size()) {
 			return false;
 		}
-
+		//从空闲的处理单元列表中移除选中的处理单元
 		getFreePes().removeAll(selectedPes);
 
 		getPeAllocationMap().put(vm.getUid(), selectedPes);

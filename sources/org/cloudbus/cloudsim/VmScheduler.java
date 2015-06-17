@@ -15,6 +15,17 @@ import java.util.Map;
 import org.cloudbus.cloudsim.lists.PeList;
 
 /**
+ * 虚拟机在物理机上面的调度策略：
+ * 假设一个云主机由一个单一处理器，然而在该主机上同时有两个VMs要求实例化。
+ * 尽管实际上VMs是独立的，但他们仍然需要共享同一个处理器和系统总线。因此，
+ * 对每个VM可用的硬件资源数目因为总的处理能力和云主机范围内可用系统带宽而
+ * 受到限制。其中在VM供应过程中一个关键因素必须考虑的是，尽量避免当创建一
+ * 个VM时在主机可用范围内需要更多的处理能力。在变化的性能隔离层次基础下允
+ * 许对不同供应政策的仿真，Cloudsim支持两层VM供应：第一，在主机层和第
+ * 二，在VM层。在主机层，对每个处理器多少处理能力应该分配给每个VM；在VM
+ * 层，VM在租用执行范围内，分配固定的、可用的处理能力给单独的应用服务。未
+ * 达到这个目标，我们假设一个抽象的应用服务作为任务单元被VM租用。
+ * 
  * VmScheduler is an abstract class that represents the policy used by a VMM to share processing
  * power among VMs running in a host.
  * 
@@ -24,22 +35,22 @@ import org.cloudbus.cloudsim.lists.PeList;
  */
 public abstract class VmScheduler {
 
-	/** The peList. */
+	/** PE列表 The peList. */
 	private List<? extends Pe> peList;
 
-	/** The map of VMs to PEs. */
+	/** 虚拟机和PE的映射表 The map of VMs to PEs. */
 	private Map<String, List<Pe>> peMap;
 
-	/** The MIPS that are currently allocated to the VMs. */
+	/** 虚拟机和处理器资源列表的映射表 The MIPS that are currently allocated to the VMs. */
 	private Map<String, List<Double>> mipsMap;
 
-	/** The total available mips. */
+	/** 可用的处理器资源 The total available mips. */
 	private double availableMips;
 
-	/** The VMs migrating in. */
+	/** 迁移进来的虚拟机列表 The VMs migrating in. */
 	private List<String> vmsMigratingIn;
 
-	/** The VMs migrating out. */
+	/** 迁移出去的虚拟机列表 The VMs migrating out. */
 	private List<String> vmsMigratingOut;
 
 	/**

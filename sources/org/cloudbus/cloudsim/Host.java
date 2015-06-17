@@ -16,6 +16,9 @@ import org.cloudbus.cloudsim.provisioners.BwProvisioner;
 import org.cloudbus.cloudsim.provisioners.RamProvisioner;
 
 /**
+ * 我们需要注意的是：我们的处理器资源都是以PE列表的形式打包的，并且打包在了VMScheduler中；
+ * 也就是说我们的VmSecheduler不仅包含了处理单元列表，虚拟机执行的时候，具体拥有处理单元的策略。
+ * 	而我们的我们处理单元实际对处理资源的分配又包含在了PeProvisioner中。
  * Host executes actions related to management of virtual machines (e.g., creation and destruction).
  * A host has a defined policy for provisioning memory and bw, as well as an allocation policy for
  * Pe's to virtual machines. A host is associated to a datacenter. It can host virtual machines.
@@ -38,7 +41,7 @@ public class Host {
 	/** The bw provisioner. */
 	private BwProvisioner bwProvisioner;
 
-	/** The allocation policy. */
+	/** 虚拟机的调度策略The allocation policy. */
 	private VmScheduler vmScheduler;
 
 	/** The vm list. */
