@@ -11,6 +11,7 @@ package org.cloudbus.cloudsim;
 import org.cloudbus.cloudsim.provisioners.PeProvisioner;
 
 /**
+ * PE，处理单元，它的定义是依据 MIPS值
  * CloudSim Pe (Processing Element) class represents CPU unit, defined in terms of Millions
  * Instructions Per Second (MIPS) rating.<br>
  * <b>ASSUMPTION:<b> All PEs under the same Machine have the same MIPS rating.
@@ -21,14 +22,14 @@ import org.cloudbus.cloudsim.provisioners.PeProvisioner;
  */
 public class Pe {
 
-	/** Denotes Pe is FREE for allocation. */
+	/** 代表这个处理单元是空闲状态 Denotes Pe is FREE for allocation. */
 	public static final int FREE = 1;
 
-	/** Denotes Pe is allocated and hence busy in processing Cloudlet. */
+	/** 代表这个处理单元已经被分配，处于忙碌的状态，也就是正在处理cloudlet Denotes Pe is allocated and hence busy in processing Cloudlet. */
 	public static final int BUSY = 2;
 
 	/**
-	 * Denotes Pe is failed and hence it can't process any Cloudlet at this moment. This Pe is
+	 * 代表这个处理单元崩溃了，不能在处理任何的云任务了，由于它所属的物理机已经崩溃了，所以它也崩溃了。Denotes Pe is failed and hence it can't process any Cloudlet at this moment. This Pe is
 	 * failed because it belongs to a machine which is also failed.
 	 */
 	public static final int FAILED = 3;
@@ -37,13 +38,14 @@ public class Pe {
 	private int id;
 
 	// FOR SPACE SHARED RESOURCE: Jan 21
-	/** The status of Pe: FREE, BUSY, FAILED: . */
+	/** 处理单元的当前状态 The status of Pe: FREE, BUSY, FAILED: . */
 	private int status;
 
-	/** The pe provisioner. */
+	/** PE的分配策略 The pe provisioner. */
 	private PeProvisioner peProvisioner;
 
 	/**
+	 * 一个新的PE
 	 * Allocates a new Pe object.
 	 * 
 	 * @param id the Pe ID

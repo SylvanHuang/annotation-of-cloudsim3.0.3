@@ -13,17 +13,17 @@ import java.util.List;
 import org.cloudbus.cloudsim.Vm;
 
 /**
- * The Class PeProvisioner.
+ * PE的供给策略 The Class PeProvisioner.
  * 
  * @author Anton Beloglazov
  * @since CloudSim Toolkit 2.0
  */
 public abstract class PeProvisioner {
 
-	/** The mips. */
+	/** PE的处理能力 （单位Million Instructions Per Second 每秒百万条指令）The mips. */
 	private double mips;
 
-	/** The available mips. */
+	/** 剩余的PE处理能力The available mips. */
 	private double availableMips;
 
 	/**

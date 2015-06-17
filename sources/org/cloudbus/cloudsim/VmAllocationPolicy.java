@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 虚拟机分配策略：将虚拟机分配到物理主机的策略（将物理机分配给虚拟机的策略）
+ * 	包含两步：1，预约物理主机 2，提交给用户
  * VmAllocationPolicy is an abstract class that represents the provisioning policy of hosts to
  * virtual machines in a Datacentre. It supports two-stage commit of reservation of hosts: first, we
  * reserve the host and, once commited by the user, it is effectivelly allocated to he/she
