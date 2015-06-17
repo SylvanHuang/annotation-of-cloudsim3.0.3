@@ -77,7 +77,7 @@ public class VmAllocationPolicySimple extends VmAllocationPolicy {
 			freePesTmp.add(freePes);
 		}
 		
-		//如果该虚拟机没有分配物理机，舱室为其分配物理机
+		//如果该虚拟机没有分配物理机，为其分配物理机
 		if (!getVmTable().containsKey(vm.getUid())) { // if this vm was not created
 			do {// we still trying until we find a host or until we try all of them
 				int moreFree = Integer.MIN_VALUE;
