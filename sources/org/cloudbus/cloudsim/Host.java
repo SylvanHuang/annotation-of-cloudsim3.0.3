@@ -226,7 +226,7 @@ public class Host {
 			getRamProvisioner().deallocateRamForVm(vm);
 			return false;
 		}
-		// 
+		// 虚拟机的调度，其实就是给虚拟机分配处理单元
 		if (!getVmScheduler().allocatePesForVm(vm, vm.getCurrentRequestedMips())) {
 			Log.printLine("[VmScheduler.vmCreate] Allocation of VM #" + vm.getId() + " to Host #" + getId()
 					+ " failed by MIPS");
