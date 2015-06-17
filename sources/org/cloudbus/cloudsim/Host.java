@@ -44,7 +44,7 @@ public class Host {
 	/** The vm list. */
 	private final List<? extends Vm> vmList = new ArrayList<Vm>();
 
-	/** The pe list. */
+	/** 处理单元列表 The pe list. */
 	private List<? extends Pe> peList;
 
 	/** Tells whether this machine is working properly or has failed. */

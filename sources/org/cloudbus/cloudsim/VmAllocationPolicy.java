@@ -24,7 +24,7 @@ import java.util.Map;
  */
 public abstract class VmAllocationPolicy {
 
-	/** The host list. */
+	/** 物理机列表 The host list. */
 	private List<? extends Host> hostList;
 
 	/**
