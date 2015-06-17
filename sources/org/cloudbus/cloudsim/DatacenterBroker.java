@@ -136,6 +136,7 @@ public class DatacenterBroker extends SimEntity {
 	}
 
 	/**
+	 * 处理datacenterBroker相关的事件
 	 * Processes events available for this Broker.
 	 * 
 	 * @param ev a SimEvent object
@@ -145,19 +146,19 @@ public class DatacenterBroker extends SimEntity {
 	@Override
 	public void processEvent(SimEvent ev) {
 		switch (ev.getTag()) {
-		// Resource characteristics request
+			// 资源特征请求事件（数据中心特征） Resource characteristics request
 			case CloudSimTags.RESOURCE_CHARACTERISTICS_REQUEST:
 				processResourceCharacteristicsRequest(ev);
 				break;
-			// Resource characteristics answer
+			// 资源特征反馈事件 Resource characteristics answer
 			case CloudSimTags.RESOURCE_CHARACTERISTICS:
 				processResourceCharacteristics(ev);
 				break;
-			// VM Creation answer
+			// 虚拟机创建反馈事件 VM Creation answer
 			case CloudSimTags.VM_CREATE_ACK:
 				processVmCreate(ev);
 				break;
-			// A finished cloudlet returned
+			// 来自于数据中心的，执行完云任务的ACK A finished cloudlet returned
 			case CloudSimTags.CLOUDLET_RETURN:
 				processCloudletReturn(ev);
 				break;
@@ -275,6 +276,7 @@ public class DatacenterBroker extends SimEntity {
 		cloudletsSubmitted--;
 		if (getCloudletList().size() == 0 && cloudletsSubmitted == 0) { // all cloudlets executed
 			Log.printLine(CloudSim.clock() + ": " + getName() + ": All Cloudlets executed. Finishing...");
+			// 任务执行完成，销毁数据中心，其中包括销毁虚拟机
 			clearDatacenters();
 			finishExecution();
 		} else { // some cloudlets haven't finished yet
@@ -378,6 +380,7 @@ public class DatacenterBroker extends SimEntity {
 	protected void clearDatacenters() {
 		for (Vm vm : getVmsCreatedList()) {
 			Log.printLine(CloudSim.clock() + ": " + getName() + ": Destroying VM #" + vm.getId());
+			// 给数据中心发送销毁虚拟机的事件
 			sendNow(getVmsToDatacentersMap().get(vm.getId()), CloudSimTags.VM_DESTROY, vm);
 		}
 

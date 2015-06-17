@@ -124,7 +124,7 @@ public class Datacenter extends SimEntity {
 		int srcId = -1;
 
 		switch (ev.getTag()) {
-		// Resource characteristics inquiry
+			// Resource characteristics inquiry
 			case CloudSimTags.RESOURCE_CHARACTERISTICS:
 				srcId = ((Integer) ev.getData()).intValue();
 				sendNow(srcId, ev.getTag(), getCharacteristics());
@@ -153,6 +153,7 @@ public class Datacenter extends SimEntity {
 				processCloudletSubmit(ev, false);
 				break;
 
+			// DatacenterBorker发送过来的一个新的Cloudlet，数据中心执行这个cloudset，并发送相应的ACK
 			// New Cloudlet arrives, but the sender asks for an ack
 			case CloudSimTags.CLOUDLET_SUBMIT_ACK:
 				processCloudletSubmit(ev, true);
@@ -204,11 +205,11 @@ public class Datacenter extends SimEntity {
 			case CloudSimTags.INFOPKT_SUBMIT:
 				processPingRequest(ev);
 				break;
-
+			// 创建虚拟机，不会发送创建虚拟机反馈事件给DatacenterBorker
 			case CloudSimTags.VM_CREATE:
 				processVmCreate(ev, false);
 				break;
-
+			// 创建虚拟机,需要发送创建虚拟机反馈事件给DatacenterBorker
 			case CloudSimTags.VM_CREATE_ACK:
 				processVmCreate(ev, true);
 				break;
@@ -429,7 +430,7 @@ public class Datacenter extends SimEntity {
 		Vm vm = (Vm) ev.getData();
 
 		boolean result = getVmAllocationPolicy().allocateHostForVm(vm);
-
+		// 带ACK的创建虚拟机
 		if (ack) {
 			int[] data = new int[3];
 			data[0] = getId();

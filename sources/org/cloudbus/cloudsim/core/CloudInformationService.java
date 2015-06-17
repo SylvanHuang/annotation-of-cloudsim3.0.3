@@ -37,7 +37,7 @@ public class CloudInformationService extends SimEntity {
 	/** 所有预留主机的列表 Only for AR hostList. */
 	private final List<Integer> arList;
 
-	/** List of all regional GIS. */
+	/** 整个区的CIS List of all regional GIS. */
 	private final List<Integer> gisList;
 
 	/**
@@ -74,12 +74,12 @@ public class CloudInformationService extends SimEntity {
 		int id = -1;  // requester id
 		switch (ev.getTag()) {
 		// storing regional GIS id
-			case CloudSimTags.REGISTER_REGIONAL_GIS:
+			case CloudSimTags.REGISTER_REGIONAL_GIS:	//注册
 				gisList.add((Integer) ev.getData());
 				break;
 
 			// request for all regional GIS list
-			case CloudSimTags.REQUEST_REGIONAL_GIS:
+			case CloudSimTags.REQUEST_REGIONAL_GIS:		// 请求
 
 				// Get ID of an entity that send this event
 				id = ((Integer) ev.getData()).intValue();
@@ -89,12 +89,12 @@ public class CloudInformationService extends SimEntity {
 				break;
 
 			// A resource is requesting to register.
-			case CloudSimTags.REGISTER_RESOURCE:
+			case CloudSimTags.REGISTER_RESOURCE:	// 注册
 				resList.add((Integer) ev.getData());
 				break;
 
 			// A resource that can support Advance Reservation
-			case CloudSimTags.REGISTER_RESOURCE_AR:
+			case CloudSimTags.REGISTER_RESOURCE_AR://
 				resList.add((Integer) ev.getData());
 				arList.add((Integer) ev.getData());
 				break;
