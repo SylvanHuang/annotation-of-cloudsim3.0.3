@@ -11,6 +11,7 @@ package org.cloudbus.cloudsim.core.predicates;
 import org.cloudbus.cloudsim.core.SimEvent;
 
 /**
+ * 该类描述了不是由特殊实体发送中选择事件的predicate类。
  * A predicate which selects events from specific entities.<br>
  * The idea of simulation predicates was copied from SimJava 2.
  * 

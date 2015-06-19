@@ -11,6 +11,7 @@ package org.cloudbus.cloudsim.core.predicates;
 import org.cloudbus.cloudsim.core.SimEvent;
 
 /**
+ * 该类是指从匹配特殊标签中选择事件的predicate类。
  * A predicate to select events with specific tags.
  * 
  * @author Marcos Dias de Assuncao
