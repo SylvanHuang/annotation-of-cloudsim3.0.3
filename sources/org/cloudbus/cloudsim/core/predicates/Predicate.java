@@ -11,6 +11,7 @@ package org.cloudbus.cloudsim.core.predicates;
 import org.cloudbus.cloudsim.core.SimEvent;
 
 /**
+ * 该类是用于从延时队列中选择事件。是一个抽象类，必须创建一个新类来扩展它。图7(b)展示了一些标准的predicates类。
  * Predicates are used to select events from the deferred queue. This class is abstract and must be
  * extended when writing a new predicate. Some standard predicates are provided.<br>
  * The idea of simulation predicates was copied from SimJava 2.

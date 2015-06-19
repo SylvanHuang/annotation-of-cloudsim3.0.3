@@ -11,6 +11,8 @@ package org.cloudbus.cloudsim.core.predicates;
 import org.cloudbus.cloudsim.core.SimEvent;
 
 /**
+ * 该类描述了在延时事件队列中匹配任意事件的predicate类。在CloudSim类中有一个叫
+ * CloudSim.SIM_ANY有一个公共可访问该实例化类，因此没必要创建任何新的实例。
  * A predicate which will match any event on the deferred event queue. There is a publicly
  * accessible instance of this predicate in <code>Simulation</code>, called
  * <code>Simulation.SIM_ANY</code>, so no new instances need to be created. <br>
