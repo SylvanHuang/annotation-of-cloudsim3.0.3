@@ -26,6 +26,7 @@ import org.cloudbus.cloudsim.core.SimEvent;
 public class PredicateAny extends Predicate {
 
 	/**
+	 * 任意事件都匹配
 	 * The match function called by <code>Simulation</code>, not used directly by the user.
 	 * 
 	 * @param ev the ev
