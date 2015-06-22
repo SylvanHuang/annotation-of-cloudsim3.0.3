@@ -18,7 +18,7 @@ package org.cloudbus.cloudsim.core;
  */
 public class SimEvent implements Cloneable, Comparable<SimEvent> {
 
-	/** 内部事件类型 internal event type **/
+	/** 内部事件类型 就是CloudSim的processEvent函数处理的事件，最基本的功能就是将事件从future移除到延迟队列中 internal event type **/
 	private final int etype;
 
 	/** 事件发生的时间 time at which event should occur **/
@@ -33,7 +33,7 @@ public class SimEvent implements Cloneable, Comparable<SimEvent> {
 	/** 事件发送给的对端实体的ID id of entity event will be sent to **/
 	private int entDst;
 
-	/** 用户定义的事件类型 the user defined type of the event **/
+	/** 用户定义的事件类型 就是SimEntity的processEvent函数处理的事件 the user defined type of the event **/
 	private final int tag;
 
 	/** 事件携带的数据 any data the event is carrying **/

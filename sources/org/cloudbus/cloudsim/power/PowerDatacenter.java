@@ -38,16 +38,16 @@ import org.cloudbus.cloudsim.core.predicates.PredicateType;
  */
 public class PowerDatacenter extends Datacenter {
 
-	/** The power. */
+	/** 功耗The power. */
 	private double power;
 
-	/** The disable migrations. */
+	/** 不能执行迁移标志 false为可以进行迁移 The disable migrations. */
 	private boolean disableMigrations;
 
-	/** The cloudlet submited. */
+	/** 云任务提交时间 The cloudlet submited. */
 	private double cloudletSubmitted;
 
-	/** The migration count. */
+	/** 迁移计数 The migration count. */
 	private int migrationCount;
 
 	/**

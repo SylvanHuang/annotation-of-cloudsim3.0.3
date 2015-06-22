@@ -59,7 +59,7 @@ public class CloudSim {
 	/** The calendar. */
 	private static Calendar calendar = null;
 
-	/** The termination time. */
+	/** 终止模拟仿真的时间 The termination time. */
 	private static double terminateAt = -1;
 
 	/** The minimal time between events. Events within shorter periods after the last event are discarded. */
@@ -236,6 +236,7 @@ public class CloudSim {
 	}
 
 	/**
+	 * 设置终止仿真的时间
 	 * This method is called if one wants to terminate the simulation at a given time.
 	 * 
 	 * @param time the time at which the simulation has to be terminated
@@ -317,7 +318,7 @@ public class CloudSim {
 	/** The deferred event queue. */
 	protected static DeferredQueue deferred;
 
-	/** The simulation clock. */
+	/** 模拟几十时钟 The simulation clock. */
 	private static double clock;
 
 	/** Flag for checking if the simulation is running. */
@@ -333,7 +334,7 @@ public class CloudSim {
 	/** The paused. */
 	private static boolean paused = false;
 
-	/** The pause at. */
+	/** 一直暂停到pauseAt为止 The pause at. */
 	private static long pauseAt = -1;
 
 	/** The abrupt terminate. */
@@ -490,7 +491,7 @@ public class CloudSim {
 	/**
 	 * Internal method used to add a new entity to the simulation when the simulation is running. It
 	 * should <b>not</b> be called from user simulations.
-	 * 
+	 * 动态的添加SimEntity
 	 * @param e The new entity
 	 */
 	protected static void addEntityDynamically(SimEntity e) {
@@ -499,7 +500,7 @@ public class CloudSim {
 		} else {
 			printMessage("Adding: " + e.getName());
 		}
-		e.startEntity();
+		e.startEntity();	//启动实体
 	}
 
 	/**
@@ -513,11 +514,11 @@ public class CloudSim {
 		boolean queue_empty;
 		
 		int entities_size = entities.size();
-		//一次遍历每一个实体；在这里其实是如果是RUNNABLE的实体，表明状态不是结束，则应该去延迟队列检查是否有时间需要执行
+		//依次遍历每一个实体；在这里其实是如果是RUNNABLE的实体，表明状态不是结束，则处理实体相关的事件
 		for (int i = 0; i < entities_size; i++) {
-			ent = entities.get(i);
-			if (ent.getState() == SimEntity.RUNNABLE) {
-				ent.run();
+			ent = entities.get(i);	//获取实体列表中的第i个实体
+			if (ent.getState() == SimEntity.RUNNABLE) {	//如果实体处于RUNABLE状态
+				ent.run();	//执行实体相关的事件
 			}
 		}
 				
@@ -536,7 +537,7 @@ public class CloudSim {
 			boolean trymore = fit.hasNext();
 			while (trymore) {
 				SimEvent next = fit.next();
-				if (next.eventTime() == first.eventTime()) {
+				if (next.eventTime() == first.eventTime()) {	//判断这两个事件发生的时间是不是一样的？？？
 					processEvent(next);
 					toRemove.add(next);
 					trymore = fit.hasNext();
@@ -641,7 +642,7 @@ public class CloudSim {
 
 	/**
 	 * Checks if events for a specific entity are present in the deferred event queue.
-	 * 
+	 * 返回Predicate策略下面 事件目的实体的id为d的事件总数
 	 * @param d the d
 	 * @param p the p
 	 * @return the int
@@ -652,7 +653,7 @@ public class CloudSim {
 		Iterator<SimEvent> iterator = deferred.iterator();
 		while (iterator.hasNext()) {
 			event = iterator.next();
-			if ((event.getDestination() == d) && (p.match(event))) {
+			if ((event.getDestination() == d) && (p.match(event))) {//首先目的实体对象id为d,然后还要满足选择事件的策略
 				count++;
 			}
 		}
@@ -746,7 +747,7 @@ public class CloudSim {
 
 	/**
 	 * Processes an event.
-	 * 
+	 * CloudSim处理的是内部事件，etype
 	 * @param e the e
 	 */
 	private static void processEvent(SimEvent e) {
@@ -756,27 +757,27 @@ public class CloudSim {
 		if (e.eventTime() < clock) {
 			throw new IllegalArgumentException("Past event detected.");
 		}
-		clock = e.eventTime();
+		clock = e.eventTime();	//更新时钟
 
 		// Ok now process it
-		switch (e.getType()) {
-			case SimEvent.ENULL:
+		switch (e.getType()) {	// getType返回内部事件类型
+			case SimEvent.ENULL:	//空事件
 				throw new IllegalArgumentException("Event has a null type.");
 
-			case SimEvent.CREATE:
+			case SimEvent.CREATE:	//创建一个SIMEntity
 				SimEntity newe = (SimEntity) e.getData();
 				addEntityDynamically(newe);
 				break;
 
-			case SimEvent.SEND:
+			case SimEvent.SEND:		//发送一个消息
 				// Check for matching wait
-				dest = e.getDestination();
+				dest = e.getDestination();	//返回事件接收者的ID
 				if (dest < 0) {
 					throw new IllegalArgumentException("Attempt to send to a null entity detected.");
 				} else {
 					int tag = e.getTag();
-					dest_ent = entities.get(dest);
-					if (dest_ent.getState() == SimEntity.WAITING) {
+					dest_ent = entities.get(dest);	//获取目的事件实体
+					if (dest_ent.getState() == SimEntity.WAITING) {	//如果实体处于等待状态？？？？
 						Integer destObj = Integer.valueOf(dest);
 						Predicate p = waitPredicates.get(destObj);
 						if ((p == null) || (tag == 9999) || (p.match(e))) {
@@ -784,7 +785,7 @@ public class CloudSim {
 							dest_ent.setState(SimEntity.RUNNABLE);
 							waitPredicates.remove(destObj);
 						} else {
-							deferred.addEvent(e);
+							deferred.addEvent(e);	//将事件添加到延迟队列中
 						}
 					} else {
 						deferred.addEvent(e);
@@ -877,7 +878,7 @@ public class CloudSim {
 	 * @return the double last clock value
 	 */
 	public static double run() {
-		if (!running) {
+		if (!running) {	//模拟同一模拟同时启动两次
 			runStart();	//开始模拟过
 		}
 		while (true) {
@@ -887,20 +888,20 @@ public class CloudSim {
 			}
 
 			// this block allows termination of simulation at a specific time
-			if (terminateAt > 0.0 && clock >= terminateAt) {
+			if (terminateAt > 0.0 && clock >= terminateAt) {	//判断时钟是否到达终止模拟仿真时间
 				terminateSimulation();
 				clock = terminateAt;
 				break;
 			}
-
+			// 如果设置了暂停时间，一直暂停到pauseAt
 			if (pauseAt != -1
 					&& ((future.size() > 0 && clock <= pauseAt && pauseAt <= future.iterator().next()
 							.eventTime()) || future.size() == 0 && pauseAt <= clock)) {
-				pauseSimulation();
-				clock = pauseAt;
+				pauseSimulation();	//设置暂停标志为paused = ture;
+				clock = pauseAt;	//暂停到的时间为pauseAt
 			}
 
-			while (paused) {
+			while (paused) {	//暂停仿真状态
 				try {
 					Thread.sleep(100);
 				} catch (InterruptedException e) {

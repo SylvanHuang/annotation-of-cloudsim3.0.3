@@ -23,7 +23,7 @@ public class Constants {
 	public final static boolean OUTPUT_CSV    = false;
 
 	public final static double SCHEDULING_INTERVAL = 300;
-	public final static double SIMULATION_LIMIT = 24 * 60 * 60;
+	public final static double SIMULATION_LIMIT = 24 * 60 * 60;	//模拟仿真测试的时间上线，超过这个时间，终止仿真
 
 	public final static int CLOUDLET_LENGTH	= 2500 * (int) SIMULATION_LIMIT;
 	public final static int CLOUDLET_PES	= 1;

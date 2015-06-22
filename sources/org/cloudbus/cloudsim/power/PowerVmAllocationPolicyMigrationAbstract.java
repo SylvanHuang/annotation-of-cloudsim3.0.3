@@ -210,7 +210,7 @@ public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAl
 	 * @return the power host
 	 */
 	public PowerHost findHostForVm(Vm vm, Set<? extends Host> excludedHosts) {
-		double minPower = Double.MAX_VALUE;
+ 		double minPower = Double.MAX_VALUE;
 		PowerHost allocatedHost = null;
 
 		for (PowerHost host : this.<PowerHost> getHostList()) {
@@ -223,10 +223,10 @@ public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAl
 				}
 
 				try {
-					double powerAfterAllocation = getPowerAfterAllocation(host, vm);
+					double powerAfterAllocation = getPowerAfterAllocation(host, vm);	//分配之后的能耗
 					if (powerAfterAllocation != -1) {
 						double powerDiff = powerAfterAllocation - host.getPower();
-						if (powerDiff < minPower) {
+						if (powerDiff < minPower) {//选择分配能耗最小的
 							minPower = powerDiff;
 							allocatedHost = host;
 						}
@@ -527,7 +527,7 @@ public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAl
 	}
 
 	/**
-	 * Gets the power after allocation.
+	 * 虚拟机分配消耗的能耗Gets the power after allocation.
 	 * 
 	 * @param host the host
 	 * @param vm the vm
@@ -536,7 +536,7 @@ public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAl
 	 */
 	protected double getPowerAfterAllocation(PowerHost host, Vm vm) {
 		double power = 0;
-		try {
+		try {// 通过
 			power = host.getPowerModel().getPower(getMaxUtilizationAfterAllocation(host, vm));
 		} catch (Exception e) {
 			e.printStackTrace();
