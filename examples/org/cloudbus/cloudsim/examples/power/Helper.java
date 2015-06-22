@@ -73,7 +73,7 @@ public class Helper {
 					Constants.VM_PES[vmType],
 					Constants.VM_RAM[vmType],
 					Constants.VM_BW,
-					Constants.VM_SIZE,
+					Constants.VM_SIZE,	// 磁盘容量大小
 					1,
 					"Xen",
 					new CloudletSchedulerDynamicWorkload(Constants.VM_MIPS[vmType], Constants.VM_PES[vmType]),
@@ -95,6 +95,7 @@ public class Helper {
 			int hostType = i % Constants.HOST_TYPES;
 
 			List<Pe> peList = new ArrayList<Pe>();
+			//HOST_PES 每台物理机中的处理单元个数
 			for (int j = 0; j < Constants.HOST_PES[hostType]; j++) {
 				peList.add(new Pe(j, new PeProvisionerSimple(Constants.HOST_MIPS[hostType])));
 			}
@@ -106,6 +107,7 @@ public class Helper {
 					Constants.HOST_STORAGE,
 					peList,
 					new VmSchedulerTimeSharedOverSubscription(peList),
+					// 设置能耗模型
 					Constants.HOST_POWER[hostType]));
 		}
 		return hostList;

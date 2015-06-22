@@ -66,8 +66,11 @@ public class RandomRunner extends RunnerAbstract {
 			broker = Helper.createBroker();
 			int brokerId = broker.getId();
 
+			// 创建云任务列表
 			cloudletList = RandomHelper.createCloudletList(brokerId, RandomConstants.NUMBER_OF_VMS);
+			// 创建虚拟机列表
 			vmList = Helper.createVmList(brokerId, cloudletList.size());
+			// 创建物理机
 			hostList = Helper.createHostList(RandomConstants.NUMBER_OF_HOSTS);
 		} catch (Exception e) {
 			e.printStackTrace();

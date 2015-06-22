@@ -46,7 +46,7 @@ public class Vm {
 	/** The bw. */
 	private long bw;
 
-	/** The vmm. */
+	/** // 虚拟机管理程序The vmm. */
 	private String vmm;
 
 	/** The Cloudlet scheduler. */
@@ -55,8 +55,7 @@ public class Vm {
 	/** The host. */
 	private Host host;
 
-	/** In migration flag. */
-	// 虚拟机迁移标志
+	/** // 虚拟机迁移标志 In migration flag. */
 	private boolean inMigration;
 
 	/** The current allocated size. */
@@ -76,7 +75,7 @@ public class Vm {
 	private List<Double> currentAllocatedMips;
 
 	/** The VM is being instantiated. */
-	// ??????
+	// 虚拟机是否被实例化？？？？
 	private boolean beingInstantiated;
 
 	/** The mips allocation history. */
@@ -129,6 +128,7 @@ public class Vm {
 		setInMigration(false);
 		setBeingInstantiated(true);
 
+		// 初始化分配资源数
 		setCurrentAllocatedBw(0);
 		setCurrentAllocatedMips(null);
 		setCurrentAllocatedRam(0);
@@ -182,6 +182,7 @@ public class Vm {
 	}
 
 	/**
+	 * 返回当前请求最大的处理器资源（单个处理单元）
 	 * Gets the current requested max mips among all virtual PEs.
 	 * 
 	 * @return the current requested max mips

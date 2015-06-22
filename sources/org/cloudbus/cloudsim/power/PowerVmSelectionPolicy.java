@@ -14,6 +14,7 @@ import java.util.List;
 import org.cloudbus.cloudsim.Vm;
 
 /**
+ * 虚拟机选择策略： 选择虚拟机迁移
  * The class of an abstract VM selection policy.
  * 
  * If you are using any algorithms, policies or workload included in the power package, please cite
@@ -38,7 +39,7 @@ public abstract class PowerVmSelectionPolicy {
 	public abstract Vm getVmToMigrate(PowerHost host);
 
 	/**
-	 * Gets the migratable vms.
+	 * 返回没有迁移的虚拟机列表 Gets the migratable vms.
 	 * 
 	 * @param host the host
 	 * @return the migratable vms

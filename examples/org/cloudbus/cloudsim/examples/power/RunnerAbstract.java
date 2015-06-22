@@ -94,6 +94,7 @@ public abstract class RunnerAbstract {
 
 		init(inputFolder + "/" + workload);
 		start(
+				// 构造此次测试实验的名字
 				getExperimentName(workload, vmAllocationPolicy, vmSelectionPolicy, parameter),
 				outputFolder,
 				getVmAllocationPolicy(vmAllocationPolicy, vmSelectionPolicy, parameter));
@@ -229,6 +230,7 @@ public abstract class RunnerAbstract {
 			String parameterName) {
 		VmAllocationPolicy vmAllocationPolicy = null;
 		PowerVmSelectionPolicy vmSelectionPolicy = null;
+		// 根据虚拟机选择策略的名字 vmSelectionPolicyName返回相应的虚拟机选择策略： 选择迁移
 		if (!vmSelectionPolicyName.isEmpty()) {
 			vmSelectionPolicy = getVmSelectionPolicy(vmSelectionPolicyName);
 		}
@@ -236,6 +238,7 @@ public abstract class RunnerAbstract {
 		if (!parameterName.isEmpty()) {
 			parameter = Double.valueOf(parameterName);
 		}
+		// 虚拟机分配策略和迁移策略
 		if (vmAllocationPolicyName.equals("iqr")) {
 			PowerVmAllocationPolicyMigrationAbstract fallbackVmSelectionPolicy = new PowerVmAllocationPolicyMigrationStaticThreshold(
 					hostList,

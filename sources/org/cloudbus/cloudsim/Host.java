@@ -32,7 +32,7 @@ public class Host {
 	/** The id. */
 	private int id;
 
-	/** The storage. */
+	/** 存储空间 The storage. */
 	private long storage;
 
 	/** The ram provisioner. */
@@ -183,13 +183,16 @@ public class Host {
 	}
 
 	/**
+	 * 判断主机是否符合VM对资源的需要
 	 * Checks if is suitable for vm.
 	 * 
 	 * @param vm the vm
 	 * @return true, if is suitable for vm
 	 */
 	public boolean isSuitableForVm(Vm vm) {
+		// 对处理器资源的需求，内存和带宽的需求，不过先判断个别处理单元的处理能力够不够，在判断总的处理能力够不够
 		return (getVmScheduler().getPeCapacity() >= vm.getCurrentRequestedMaxMips()
+				//判断主机总的处理器资源够不够
 				&& getVmScheduler().getAvailableMips() >= vm.getCurrentRequestedTotalMips()
 				&& getRamProvisioner().isSuitableForVm(vm, vm.getCurrentRequestedRam()) && getBwProvisioner()
 				.isSuitableForVm(vm, vm.getCurrentRequestedBw()));

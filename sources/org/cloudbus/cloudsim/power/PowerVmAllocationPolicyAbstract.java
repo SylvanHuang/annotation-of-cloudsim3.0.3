@@ -35,6 +35,7 @@ import org.cloudbus.cloudsim.core.CloudSim;
 public abstract class PowerVmAllocationPolicyAbstract extends VmAllocationPolicy {
 
 	/** The vm table. */
+	// 虚拟机表： 键-VM uid(string类型) 值-物理机
 	private final Map<String, Host> vmTable = new HashMap<String, Host>();
 
 	/**

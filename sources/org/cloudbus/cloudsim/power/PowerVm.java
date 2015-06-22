@@ -44,6 +44,7 @@ public class PowerVm extends Vm {
 	private double previousTime;
 
 	/** The scheduling interval. */
+	// 调度的间隔
 	private double schedulingInterval;
 
 	/**
@@ -69,7 +70,7 @@ public class PowerVm extends Vm {
 			final int ram,
 			final long bw,
 			final long size,
-			final int priority,
+			final int priority, //这次参数并没有被使用
 			final String vmm,
 			final CloudletScheduler cloudletScheduler,
 			final double schedulingInterval) {

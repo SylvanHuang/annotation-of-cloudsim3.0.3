@@ -41,7 +41,7 @@ import org.cloudbus.cloudsim.util.ExecutionTimeMeasurer;
  */
 public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAllocationPolicyAbstract {
 
-	/** The vm selection policy. */
+	/** 虚拟机选择策略 The vm selection policy. */
 	private PowerVmSelectionPolicy vmSelectionPolicy;
 
 	/** The saved allocation. */

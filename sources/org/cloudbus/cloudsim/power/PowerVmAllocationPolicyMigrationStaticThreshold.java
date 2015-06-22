@@ -29,7 +29,7 @@ import org.cloudbus.cloudsim.Vm;
  */
 public class PowerVmAllocationPolicyMigrationStaticThreshold extends PowerVmAllocationPolicyMigrationAbstract {
 
-	/** The utilization threshold. */
+	/** // 使用率阈值 The utilization threshold. */
 	private double utilizationThreshold = 0.9;
 
 	/**

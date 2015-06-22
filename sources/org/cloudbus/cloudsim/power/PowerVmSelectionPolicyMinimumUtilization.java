@@ -14,6 +14,7 @@ import org.cloudbus.cloudsim.Vm;
 import org.cloudbus.cloudsim.core.CloudSim;
 
 /**
+ * 最小使用率选择策略
  * The Minimum Utilization (MU) VM selection policy.
  * 
  * If you are using any algorithms, policies or workload included in the power package, please cite
@@ -30,6 +31,7 @@ import org.cloudbus.cloudsim.core.CloudSim;
 public class PowerVmSelectionPolicyMinimumUtilization extends PowerVmSelectionPolicy {
 
 	/*
+	 * 返回总的使用率最小的虚拟机进行迁移（使用率小，说明负载小，可以进行迁移整合）
 	 * (non-Javadoc)
 	 * @see
 	 * org.cloudbus.cloudsim.experiments.power.PowerVmSelectionPolicy#getVmsToMigrate(org.cloudbus
@@ -43,8 +45,9 @@ public class PowerVmSelectionPolicyMinimumUtilization extends PowerVmSelectionPo
 		}
 		Vm vmToMigrate = null;
 		double minMetric = Double.MAX_VALUE;
+		// 找使用率最小的虚拟机
 		for (Vm vm : migratableVms) {
-			if (vm.isInMigration()) {
+			if (vm.isInMigration()) {	//如果已经标志为了迁移的虚拟机，则忽略
 				continue;
 			}
 			double metric = vm.getTotalUtilizationOfCpuMips(CloudSim.clock()) / vm.getMips();
