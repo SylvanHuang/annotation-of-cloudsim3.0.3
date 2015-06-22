@@ -56,24 +56,31 @@ public class Vm {
 	private Host host;
 
 	/** In migration flag. */
+	// 虚拟机迁移标志
 	private boolean inMigration;
 
 	/** The current allocated size. */
+	// 当前分配大小
 	private long currentAllocatedSize;
 
 	/** The current allocated ram. */
+	// 当前分配的内存大小
 	private int currentAllocatedRam;
 
 	/** The current allocated bw. */
+	// 当前分配的带宽大小
 	private long currentAllocatedBw;
 
 	/** The current allocated mips. */
+	// 当前分配的处理机频率
 	private List<Double> currentAllocatedMips;
 
 	/** The VM is being instantiated. */
+	// ??????
 	private boolean beingInstantiated;
 
 	/** The mips allocation history. */
+	// 虚拟机分配的历史
 	private final List<VmStateHistoryEntry> stateHistory = new LinkedList<VmStateHistoryEntry>();
 
 	/**

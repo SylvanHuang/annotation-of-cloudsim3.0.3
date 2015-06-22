@@ -9,6 +9,7 @@
 package org.cloudbus.cloudsim;
 
 /**
+ * 虚拟机MIPS分配历史
  * The Class VmMipsAllocationHistoryEntry.
  * 
  * @author Anton Beloglazov
@@ -19,13 +20,13 @@ public class VmStateHistoryEntry {
 	/** The time. */
 	private double time;
 
-	/** The allocated mips. */
+	/** 分配的MIPS The allocated mips. */
 	private double allocatedMips;
 
-	/** The requested mips. */
+	/** 请求的MIPS The requested mips. */
 	private double requestedMips;
 
-	/** The is in migration. */
+	/** 是否在迁移的虚拟机中 The is in migration. */
 	private boolean isInMigration;
 
 	/**

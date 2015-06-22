@@ -37,6 +37,7 @@ public class PowerVm extends Vm {
 	public static final int HISTORY_LENGTH = 30;
 
 	/** The utilization history. */
+	// 使用率历史 什么使用率的历史???
 	private final List<Double> utilizationHistory = new LinkedList<Double>();
 
 	/** The previous time. */
