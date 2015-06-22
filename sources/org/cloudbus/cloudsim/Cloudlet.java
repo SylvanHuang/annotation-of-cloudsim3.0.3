@@ -40,22 +40,23 @@ public class Cloudlet {
 	 * The input file size of this Cloudlet before execution (unit: in byte). in byte = program +
 	 * input data size
 	 */
-	//执行前cloudlet的输入文件大小（单位：字节）  
+	// 执行前cloudlet的输入文件大小（单位：字节）  
 	private final long cloudletFileSize;
 
 	/** The output file size of this Cloudlet after execution (unit: in byte). */
+	// 执行后cloudlet的输入文件大小（单位：字节）
 	private final long cloudletOutputSize;
 
-	/** 执行任务需要的处理单元个数 The num of Pe required to execute this job. */
+	/** 执行任务需要的处理单元的个数 The num of Pe required to execute this job. */
 	private int numberOfPes;
 
 	/** The cloudlet ID. */
 	private final int cloudletId;
 
-	/** The status of this Cloudlet. */
+	/** 云任务的状态 The status of this Cloudlet. */
 	private int status;
 
-	/** The format of decimal numbers. */
+	/** 十进制格式数据 The format of decimal numbers. */
 	private DecimalFormat num;
 
 	/** cloudset完成的时间  The time where this Cloudlet completes. */
@@ -70,7 +71,7 @@ public class Cloudlet {
     //由于有像CANCEL, PAUSED, RESUMED这样的新功能，该属性仅存储最近开始时间。先前的执行时间被忽略。
 	private double execStartTime;
 
-	/** The ID of a reservation made for this cloudlet. */
+	/** 云任务的保留ID The ID of a reservation made for this cloudlet. */
 	private int reservationId = -1;
 
 	/** T//是否保存该cloudlet的事务历史记录 he records the transaction history for this Cloudlet. */
@@ -91,65 +92,79 @@ public class Cloudlet {
 	/** 资源调度方式 The class type of Cloudlet for resource scheduling. */
 	private int classType;
 
-	/** The ToS for sending Cloudlet over the network. */
+	/** 通过网络发送云任务的TOS The ToS for sending Cloudlet over the network. */
 	private int netToS;
 
 	// //////////////////////////////////////////
 	// Below are CONSTANTS attributes
 	/** The Cloudlet has been created and added to the CloudletList object. */
+	//cloudlet创建并加入到CloudletList对象  
 	public static final int CREATED = 0;
 
 	/** The Cloudlet has been assigned to a CloudResource object as planned. */
+	//cloudlet按计划分配给CloudResource对象
 	public static final int READY = 1;
 
 	/** The Cloudlet has moved to a Cloud node. */
+	//cloudlet移动到cloud节点 
 	public static final int QUEUED = 2;
 
 	/** The Cloudlet is in execution in a Cloud node. */
+	//cloudlet在cloud节点中执行
 	public static final int INEXEC = 3;
 
 	/** The Cloudlet has been executed successfully. */
+	// 云任务运行成功
 	public static final int SUCCESS = 4;
 
 	/** The Cloudlet is failed. */
+	// 云任务运行失败
 	public static final int FAILED = 5;
 
 	/** The Cloudlet has been canceled. */
+	// 晕人被取消
 	public static final int CANCELED = 6;
 
 	/**
 	 * The Cloudlet has been paused. It can be resumed by changing the status into <tt>RESUMED</tt>.
 	 */
+	// cloudlet被暂停，可以通过改变状态为RESUMED来恢复运行 
 	public static final int PAUSED = 7;
 
 	/** The Cloudlet has been resumed from <tt>PAUSED</tt> state. */
+	// 从PAUSED状态恢复运行  
 	public static final int RESUMED = 8;
 
 	/** The cloudlet has failed due to a resource failure. */
+	// cloudlet由于资源问题而失败
 	public static final int FAILED_RESOURCE_UNAVAILABLE = 9;
 
-	/** The vm id. */
+	/** 虚拟机ID The vm id. */
 	protected int vmId;
 
-	/** The cost per bw. */
+	/** 单位带宽费用 The cost per bw. */
 	protected double costPerBw;
 
-	/** The accumulated bw cost. */
+	/** 累计带宽费用 The accumulated bw cost. */
 	protected double accumulatedBwCost;
 
 	// Utilization
 
 	/** The utilization of cpu model. */
+	// CPU使用模型
 	private UtilizationModel utilizationModelCpu;
 
 	/** The utilization of memory model. */
+	// 内存使用模型
 	private UtilizationModel utilizationModelRam;
 
 	/** The utilization of bw model. */
+	// 带宽使用模型
 	private UtilizationModel utilizationModelBw;
 
 	// Data cloudlet
 	/** The required files. */
+	// 请求文件列表名
 	private List<String> requiredFiles = null;   // list of required filenames
 
 	/**

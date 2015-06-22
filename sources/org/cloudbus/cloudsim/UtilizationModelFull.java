@@ -9,6 +9,7 @@
 package org.cloudbus.cloudsim;
 
 /**
+ * 满资源使用模型，返回的资源使用率总为 1
  * The UtilizationModelFull class is a simple model, according to which a Cloudlet always utilize
  * all the available CPU capacity.
  * 

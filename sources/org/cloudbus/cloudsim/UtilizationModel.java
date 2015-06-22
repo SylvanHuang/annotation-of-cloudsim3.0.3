@@ -9,7 +9,7 @@
 package org.cloudbus.cloudsim;
 
 /**
- * 资源利用模式？？？？？？
+ * 资源使用模型 ： getUtilization()返回资源的使用率
  * The UtilizationModel interface needs to be implemented in order to provide a fine-grained control
  * over resource usage by a Cloudlet.
  * 

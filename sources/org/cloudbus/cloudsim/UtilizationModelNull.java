@@ -9,6 +9,7 @@
 package org.cloudbus.cloudsim;
 
 /**
+ * 空资源使用模型：返回的资源使用率始终为 0
  * The UtilizationModelNull class is a simple model, according to which a Cloudlet always require
  * zero capacity.
  * 
