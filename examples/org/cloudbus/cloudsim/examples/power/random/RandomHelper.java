@@ -43,7 +43,8 @@ public class RandomHelper {
 		long outputSize = 300;
 		long seed = RandomConstants.CLOUDLET_UTILIZATION_SEED;
 		UtilizationModel utilizationModelNull = new UtilizationModelNull();
-
+		
+		// 注意这里面创建的云任务都只考虑了CPU，带宽和内存的使用都没有考虑，带宽和内存这两种资源的使用模型是UtilizationModelNull
 		for (int i = 0; i < cloudletsNumber; i++) {
 			Cloudlet cloudlet = null;
 			if (seed == -1) {

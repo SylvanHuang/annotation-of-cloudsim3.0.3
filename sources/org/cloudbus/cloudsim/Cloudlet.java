@@ -29,6 +29,7 @@ public class Cloudlet {
 	 * The User or Broker ID. It is advisable that broker set this ID with its own ID, so that
 	 * CloudResource returns to it after the execution.
 	 **/
+	// User或者Broker的ID。建议将broker的ID设置该ID为自己的ID，这样CloudResource在执行后返回到它。
 	private int userId;
 
 	/**
@@ -71,7 +72,7 @@ public class Cloudlet {
     //由于有像CANCEL, PAUSED, RESUMED这样的新功能，该属性仅存储最近开始时间。先前的执行时间被忽略。
 	private double execStartTime;
 
-	/** 云任务的保留ID The ID of a reservation made for this cloudlet. */
+	/** 云任务的保留ID ??保留ID的作用是?? The ID of a reservation made for this cloudlet. */
 	private int reservationId = -1;
 
 	/** T//是否保存该cloudlet的事务历史记录 he records the transaction history for this Cloudlet. */
@@ -383,27 +384,34 @@ public class Cloudlet {
 	/**
 	 * Internal class that keeps track Cloudlet's movement in different CloudResources.
 	 */
+	// 内部类： 用于追踪cloudset在不同CloudResources中的移动
 	private static class Resource {
 
 		/** Cloudlet's submission time to a CloudResource. */
+		//cloudlet提交到某个CloudResource的时间
 		public double submissionTime = 0.0;
 
 		/**
 		 * The time of this Cloudlet resides in a CloudResource (from arrival time until departure
 		 * time).
 		 */
+		//cloudlet在某个CloudResource中驻留时间（从到达时间到离开时间）
 		public double wallClockTime = 0.0;
 
 		/** The total execution time of this Cloudlet in a CloudResource. */
+		// cloudlet在某个CloudResource的总执行时间  
 		public double actualCPUTime = 0.0;
 
 		/** Cost per second a CloudResource charge to execute this Cloudlet. */
+		//执行该cloudlet的每秒费用
 		public double costPerSec = 0.0;
 
 		/** Cloudlet's length finished so far. */
+		//目前为止，cloudlet的执行长度 
 		public long finishedSoFar = 0;
 
 		/** a CloudResource id. */
+		// CloudResource id
 		public int resourceId = -1;
 
 		/** a CloudResource name. */
@@ -506,6 +514,7 @@ public class Cloudlet {
 	 * @pre $none
 	 * @post $none
 	 */
+	// //获取该cloudlet在某个资源上的等待时间 
 	public double getWaitingTime() {
 		if (index == -1) {
 			return 0;
