@@ -32,7 +32,7 @@ public class Cloudlet {
 	private int userId;
 
 	/**
-	 * 一个CloudResorce中要运行的cloudlet的大小（单位：MI）  The size of this Cloudlet to be executed in a CloudResource (unit: in MI).
+	 * 一个CloudResorce中要运行的cloudlet的大小（单位：MI Million Instructions 百万条指令）  The size of this Cloudlet to be executed in a CloudResource (unit: in MI).
 	 */
 	private long cloudletLength;
 
