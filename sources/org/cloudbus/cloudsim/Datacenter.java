@@ -427,25 +427,25 @@ public class Datacenter extends SimEntity {
 	 * @post $none
 	 */
 	protected void processVmCreate(SimEvent ev, boolean ack) {
-		Vm vm = (Vm) ev.getData();
-
+		Vm vm = (Vm) ev.getData();	//获取需要创建的虚拟机对象
+		//获取数据中心的虚拟机分配策略，并未虚拟机分配一台物理机
 		boolean result = getVmAllocationPolicy().allocateHostForVm(vm);
-		// 带ACK的创建虚拟机
+		// 如果数据中心代理发送的是带ACK的创建虚拟机事件，则需要向数据中心代理发送一个虚拟机创建的ACK事件，其中携带了一些虚拟机的信息，包括此次创建虚拟机成功与否
 		if (ack) {
 			int[] data = new int[3];
 			data[0] = getId();
 			data[1] = vm.getId();
 
 			if (result) {
-				data[2] = CloudSimTags.TRUE;
+				data[2] = CloudSimTags.TRUE;	//代表创建成功
 			} else {
-				data[2] = CloudSimTags.FALSE;
-			}
+				data[2] = CloudSimTags.FALSE;	//代表创建失败
+			}//向数据中心代理发送一个虚拟机创建的ACK事件，其中携带了一些虚拟机的信息，包括此次创建虚拟机成功与否
 			send(vm.getUserId(), CloudSim.getMinTimeBetweenEvents(), CloudSimTags.VM_CREATE_ACK, data);
 		}
 
-		if (result) {
-			getVmList().add(vm);
+		if (result) {//如果创建虚拟机成功
+			getVmList().add(vm);//将虚拟机加入数据中心的虚拟机列表
 
 			if (vm.isBeingInstantiated()) {
 				vm.setBeingInstantiated(false);

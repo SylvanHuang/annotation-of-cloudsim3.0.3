@@ -93,6 +93,7 @@ public abstract class RunnerAbstract {
 		}
 
 		init(inputFolder + "/" + workload);
+		
 		start(
 				// 构造此次测试实验的名字 random_iqr_mu_1.5
 				getExperimentName(workload, vmAllocationPolicy, vmSelectionPolicy, parameter),

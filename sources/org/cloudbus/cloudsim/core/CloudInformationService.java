@@ -31,7 +31,7 @@ import org.cloudbus.cloudsim.Log;
  */
 public class CloudInformationService extends SimEntity {
 
-	/** 所有类型的主机列表 For all types of hostList. */
+	/** 所有类型的资源，必须向其注册，才会在此处保存 For all types of hostList. */
 	private final List<Integer> resList;
 
 	/** 所有预留主机的列表 Only for AR hostList. */

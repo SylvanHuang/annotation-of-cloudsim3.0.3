@@ -526,7 +526,7 @@ public class CloudSim {
 		if (future.size() > 0) {
 			List<SimEvent> toRemove = new ArrayList<SimEvent>();
 			Iterator<SimEvent> fit = future.iterator();
-			queue_empty = false;
+			queue_empty = false;	//每次future队列中有事件，那么
 			SimEvent first = fit.next();
 			processEvent(first);//CloudSim自身的processEvent会将时间移入延迟队列中
 			future.remove(first);
@@ -879,7 +879,7 @@ public class CloudSim {
 	 */
 	public static double run() {
 		if (!running) {	//模拟同一模拟同时启动两次
-			runStart();	//开始模拟过
+			runStart();	//执行实体
 		}
 		while (true) {
 			//runClockTick()涉及了事件的处理

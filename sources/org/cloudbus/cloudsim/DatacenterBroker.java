@@ -31,22 +31,22 @@ import org.cloudbus.cloudsim.lists.VmList;
  */
 public class DatacenterBroker extends SimEntity {
 
-	/** The vm list. */
+	/** 虚拟机列表 The vm list. */
 	protected List<? extends Vm> vmList;
 
-	/** The vms created list. */
+	/** 已经创建的虚拟机列表The vms created list. */
 	protected List<? extends Vm> vmsCreatedList;
 
-	/** The cloudlet list. */
+	/** 云任务列表 The cloudlet list. */
 	protected List<? extends Cloudlet> cloudletList;
 
-	/** The cloudlet submitted list. */
+	/** 已经提交的云任务列表 The cloudlet submitted list. */
 	protected List<? extends Cloudlet> cloudletSubmittedList;
 
 	/** The cloudlet received list. */
 	protected List<? extends Cloudlet> cloudletReceivedList;
 
-	/** The cloudlets submitted. */
+	/** 统计云任务提交次数The cloudlets submitted. */
 	protected int cloudletsSubmitted;
 
 	/** The vms requested. */
@@ -191,7 +191,7 @@ public class DatacenterBroker extends SimEntity {
 	}
 
 	/**
-	 * Process a request for the characteristics of a PowerDatacenter.
+	 * 处理获取数据中心特征的请求 Process a request for the characteristics of a PowerDatacenter.
 	 * 
 	 * @param ev a SimEvent object
 	 * @pre ev != $null
@@ -205,6 +205,7 @@ public class DatacenterBroker extends SimEntity {
 				+ getDatacenterIdsList().size() + " resource(s)");
 
 		for (Integer datacenterId : getDatacenterIdsList()) {
+			// 向数据中心实体，发送请求数据中心特征的事件
 			sendNow(datacenterId, CloudSimTags.RESOURCE_CHARACTERISTICS, getId());
 		}
 	}
@@ -342,11 +343,11 @@ public class DatacenterBroker extends SimEntity {
 	 */
 	protected void submitCloudlets() {
 		int vmIndex = 0;
-		for (Cloudlet cloudlet : getCloudletList()) {
+		for (Cloudlet cloudlet : getCloudletList()) {//提交云任务
 			Vm vm;
 			// if user didn't bind this cloudlet and it has not been executed yet
-			if (cloudlet.getVmId() == -1) {
-				vm = getVmsCreatedList().get(vmIndex);
+			if (cloudlet.getVmId() == -1) {//如果用户没有将任务绑定 到制定的虚拟机
+				vm = getVmsCreatedList().get(vmIndex);	//从虚拟机列表中取一个虚拟机
 			} else { // submit to the specific vm
 				vm = VmList.getById(getVmsCreatedList(), cloudlet.getVmId());
 				if (vm == null) { // vm was not created
@@ -358,8 +359,8 @@ public class DatacenterBroker extends SimEntity {
 
 			Log.printLine(CloudSim.clock() + ": " + getName() + ": Sending cloudlet "
 					+ cloudlet.getCloudletId() + " to VM #" + vm.getId());
-			cloudlet.setVmId(vm.getId());
-			sendNow(getVmsToDatacentersMap().get(vm.getId()), CloudSimTags.CLOUDLET_SUBMIT, cloudlet);
+			cloudlet.setVmId(vm.getId());	//设置云任务的虚拟机
+			sendNow(getVmsToDatacentersMap().get(vm.getId()), CloudSimTags.CLOUDLET_SUBMIT, cloudlet);//向这个虚拟机所在的数据中心发送一个云任务提交的事件
 			cloudletsSubmitted++;
 			vmIndex = (vmIndex + 1) % getVmsCreatedList().size();
 			getCloudletSubmittedList().add(cloudlet);

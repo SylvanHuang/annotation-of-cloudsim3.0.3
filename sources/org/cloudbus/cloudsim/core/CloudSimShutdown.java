@@ -23,7 +23,7 @@ import java.util.Calendar;
  */
 public class CloudSimShutdown extends SimEntity {
 
-	/** The num user. */
+	/** 用户数 The num user. */
 	private int numUser;
 
 	/**
