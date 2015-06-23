@@ -31,7 +31,7 @@ import org.cloudbus.cloudsim.core.SimEvent;
  */
 public class Datacenter extends SimEntity {
 
-	/** The characteristics. */
+	/** 代表数据中心静态属性 The characteristics. */
 	private DatacenterCharacteristics characteristics;
 
 	/** The regional cis name. */

@@ -558,7 +558,7 @@ public class Helper {
 	}
 
 	/**
-	 * Gets the sla metrics.
+	 * Service level agreement 服务等级协议 : Gets the sla metrics.
 	 * 
 	 * @param vms the vms
 	 * @return the sla metrics
@@ -578,7 +578,7 @@ public class Helper {
 			double previousAllocated = 0;
 			double previousRequested = 0;
 			boolean previousIsInMigration = false;
-
+			// 虚拟机状态的历史
 			for (VmStateHistoryEntry entry : vm.getStateHistory()) {
 				if (previousTime != -1) {
 					double timeDiff = entry.getTime() - previousTime;

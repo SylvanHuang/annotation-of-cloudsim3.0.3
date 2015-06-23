@@ -30,10 +30,10 @@ public class DatacenterCharacteristics {
 	/** The resource id -- setup when Resource is created. */
 	private int id;
 
-	/** The architecture. */
+	/** 体系结构 如x86The architecture. */
 	private String architecture;
 
-	/** The os. */
+	/** 操作系统The os. */
 	private String os;
 
 	/** The host list. */
