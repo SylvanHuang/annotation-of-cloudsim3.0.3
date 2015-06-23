@@ -266,6 +266,7 @@ public class PowerDatacenter extends Datacenter {
 	 */
 	@Override
 	protected void processCloudletSubmit(SimEvent ev, boolean ack) {
+		//
 		super.processCloudletSubmit(ev, ack);
 		setCloudletSubmitted(CloudSim.clock());
 	}

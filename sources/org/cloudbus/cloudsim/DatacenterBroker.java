@@ -31,13 +31,13 @@ import org.cloudbus.cloudsim.lists.VmList;
  */
 public class DatacenterBroker extends SimEntity {
 
-	/** 虚拟机列表 The vm list. */
+	/** 等待创建的虚拟机列表 The vm list. */
 	protected List<? extends Vm> vmList;
 
 	/** 已经创建的虚拟机列表The vms created list. */
 	protected List<? extends Vm> vmsCreatedList;
 
-	/** 云任务列表 The cloudlet list. */
+	/** 等待提交的云任务列表，一旦云任务提交了，将被从等待列表中移除，移入到已提交的云任务列表中 The cloudlet list. */
 	protected List<? extends Cloudlet> cloudletList;
 
 	/** 已经提交的云任务列表 The cloudlet submitted list. */
@@ -366,7 +366,7 @@ public class DatacenterBroker extends SimEntity {
 			getCloudletSubmittedList().add(cloudlet);
 		}
 
-		// remove submitted cloudlets from waiting list
+		// 从等待云任务列表中移除 remove submitted cloudlets from waiting list
 		for (Cloudlet cloudlet : getCloudletSubmittedList()) {
 			getCloudletList().remove(cloudlet);
 		}

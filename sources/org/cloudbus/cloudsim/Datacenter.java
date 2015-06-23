@@ -40,7 +40,7 @@ public class Datacenter extends SimEntity {
 	/** The vm provisioner. */
 	private VmAllocationPolicy vmAllocationPolicy;
 
-	/** The last process time. */
+	/** 最后一次处理的时间 The last process time. */
 	private double lastProcessTime;
 
 	/** The storage list. */
@@ -677,6 +677,7 @@ public class Datacenter extends SimEntity {
 	 * @post $none
 	 */
 	protected void processCloudletSubmit(SimEvent ev, boolean ack) {
+		
 		updateCloudletProcessing();
 
 		try {
@@ -723,8 +724,8 @@ public class Datacenter extends SimEntity {
 			double fileTransferTime = predictFileTransferTime(cl.getRequiredFiles());
 
 			Host host = getVmAllocationPolicy().getHost(vmId, userId);
-			Vm vm = host.getVm(vmId, userId);
-			CloudletScheduler scheduler = vm.getCloudletScheduler();
+			Vm vm = host.getVm(vmId, userId);//拿到相应的虚拟机
+			CloudletScheduler scheduler = vm.getCloudletScheduler();//取出相应虚拟机的CloudletScheduler的
 			double estimatedFinishTime = scheduler.cloudletSubmit(cl, fileTransferTime);
 
 			// if this cloudlet is in the exec queue
