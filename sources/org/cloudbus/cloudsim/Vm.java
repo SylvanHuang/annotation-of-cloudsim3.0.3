@@ -141,7 +141,7 @@ public class Vm {
 	 * @param currentTime current simulation time
 	 * @param mipsShare array with MIPS share of each Pe available to the scheduler
 	 * @return time predicted completion time of the earliest finishing cloudlet, or 0 if there is no
-	 *         next events
+	 *         next events VMs将返回当前由VMs管理的任务单元下次预计完成时间，如果返回值为0表示没有事件在虚拟机中被处理
 	 * @pre currentTime >= 0
 	 * @post $none
 	 */
@@ -153,15 +153,15 @@ public class Vm {
 	}
 
 	/**
-	 * Gets the current requested mips.
+	 * 获取虚拟机请求的MIPS Gets the current requested mips.
 	 * 
 	 * @return the current requested mips
 	 */
 	public List<Double> getCurrentRequestedMips() {
 		List<Double> currentRequestedMips = getCloudletScheduler().getCurrentRequestedMips();
-		if (isBeingInstantiated()) {
+		if (isBeingInstantiated()) {//如果正在初始化，那么上面获得currentRequestMips肯定为空的
 			currentRequestedMips = new ArrayList<Double>();
-			for (int i = 0; i < getNumberOfPes(); i++) {
+			for (int i = 0; i < getNumberOfPes(); i++) {//每个处理单元所需要的处理器资源列表
 				currentRequestedMips.add(getMips());
 			}
 		}

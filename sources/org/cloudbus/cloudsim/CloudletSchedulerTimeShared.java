@@ -76,7 +76,7 @@ public class CloudletSchedulerTimeShared extends CloudletScheduler {
 			return 0.0;
 		}
 
-		// 检查完成的cloudset check finished cloudlets
+		// 检查是否执行完成，如果执行完成了则插入到finish云任务列表  cloudset check finished cloudlets
 		double nextEvent = Double.MAX_VALUE;
 		List<ResCloudlet> toRemove = new ArrayList<ResCloudlet>();
 		for (ResCloudlet rcl : getCloudletExecList()) {
@@ -305,17 +305,17 @@ public class CloudletSchedulerTimeShared extends CloudletScheduler {
 	@Override
 	public double cloudletSubmit(Cloudlet cloudlet, double fileTransferTime) {
 		ResCloudlet rcl = new ResCloudlet(cloudlet);
-		rcl.setCloudletStatus(Cloudlet.INEXEC);
+		rcl.setCloudletStatus(Cloudlet.INEXEC);//更新云任务的状态
 		for (int i = 0; i < cloudlet.getNumberOfPes(); i++) {
 			rcl.setMachineAndPeId(0, i);
 		}
 
-		getCloudletExecList().add(rcl);
+		getCloudletExecList().add(rcl);//将云任务加入云任务调度器中的，云任务执行列表中
 
 		// use the current capacity to estimate the extra amount of
 		// time to file transferring. It must be added to the cloudlet length
 		double extraSize = getCapacity(getCurrentMipsShare()) * fileTransferTime;
-		long length = (long) (cloudlet.getCloudletLength() + extraSize);
+		long length = (long) (cloudlet.getCloudletLength() + extraSize);//计算出云任务需要花费的执行时间
 		cloudlet.setCloudletLength(length);
 
 		return cloudlet.getCloudletLength() / getCapacity(getCurrentMipsShare());

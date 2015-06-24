@@ -25,7 +25,7 @@ public abstract class CloudletScheduler {
 	/** 先前的时间The previous time. */
 	private double previousTime;
 
-	/** 当前共享的处理器资源列表 The current mips share. */
+	/** 当前虚拟机共享的处理器资源列表，其实也就是虚拟机的处理资源列表，因为一个虚拟机 The current mips share. */
 	private List<Double> currentMipsShare;
 
 	/**

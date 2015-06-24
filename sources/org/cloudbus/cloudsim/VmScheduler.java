@@ -16,7 +16,7 @@ import org.cloudbus.cloudsim.lists.PeList;
 
 /**
  * 虚拟机在物理机上面的调度策略：
- * 假设一个云主机由一个单一处理器，然而在该主机上同时有两个VMs要求实例化。
+ * 	假设一个云主机由一个单一处理器，然而在该主机上同时有两个VMs要求实例化。
  * 尽管实际上VMs是独立的，但他们仍然需要共享同一个处理器和系统总线。因此，
  * 对每个VM可用的硬件资源数目因为总的处理能力和云主机范围内可用系统带宽而
  * 受到限制。其中在VM供应过程中一个关键因素必须考虑的是，尽量避免当创建一
@@ -165,7 +165,7 @@ public abstract class VmScheduler {
 	}
 
 	/**
-	 * Returns PE capacity in MIPS.
+	 * 返回物理机一个处理单元的处理能力 Returns PE capacity in MIPS.
 	 * 
 	 * @return mips
 	 */

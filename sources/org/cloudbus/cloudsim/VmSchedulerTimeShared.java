@@ -53,7 +53,7 @@ public class VmSchedulerTimeShared extends VmScheduler {
 		/**
 		 * TODO: add the same to RAM and BW provisioners
 		 */
-		if (vm.isInMigration()) {
+ 		if (vm.isInMigration()) {
 			if (!getVmsMigratingIn().contains(vm.getUid()) && !getVmsMigratingOut().contains(vm.getUid())) {
 				getVmsMigratingOut().add(vm.getUid());
 			}
@@ -78,14 +78,17 @@ public class VmSchedulerTimeShared extends VmScheduler {
 		double totalRequestedMips = 0;
 		double peMips = getPeCapacity();
 		for (Double mips : mipsShareRequested) {
-			// each virtual PE of a VM must require not more than the capacity of a physical PE
+			// 物理机的每一个处理单元的处理能力必须大于虚拟机的处理单元所需的处理器资源 each virtual PE of a VM must require not more than the capacity of a physical PE
 			if (mips > peMips) {
 				return false;
 			}
 			totalRequestedMips += mips;
 		}
 
-		// This scheduler does not allow over-subscription
+		// 上面的for循环虽然保证了，物理机的处理单元满足虚拟机对处理单元处理能力的请求，但是，不能说明这个物理有足够的处理能力
+		// 例如，物理机只有一个处理单元，处理能力为100，虚拟机请求两个处理单元，每个需要60，虽然处理对单个处理单元来说足够，但是
+		// 总的处理能力不够。这里说明了，物理机的处理单元只要处理能力足够，那么我们可以将一个物理的处理单元虚拟成多个处理单元供给
+		// 虚拟机使用，这也正是我们虚拟机调度所需要的This scheduler does not allow over-subscription
 		if (getAvailableMips() < totalRequestedMips) {
 			return false;
 		}
@@ -111,7 +114,7 @@ public class VmSchedulerTimeShared extends VmScheduler {
 		}
 
 		getMipsMap().put(vmUid, mipsShareAllocated);
-		setAvailableMips(getAvailableMips() - totalRequestedMips);
+		setAvailableMips(getAvailableMips() - totalRequestedMips);//减少物理机总的可用的处理能力
 
 		return true;
 	}

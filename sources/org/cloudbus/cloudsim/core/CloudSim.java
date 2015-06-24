@@ -318,7 +318,7 @@ public class CloudSim {
 	/** The deferred event queue. */
 	protected static DeferredQueue deferred;
 
-	/** 模拟几十时钟 The simulation clock. */
+	/** 模拟计时时钟 The simulation clock. */
 	private static double clock;
 
 	/** Flag for checking if the simulation is running. */

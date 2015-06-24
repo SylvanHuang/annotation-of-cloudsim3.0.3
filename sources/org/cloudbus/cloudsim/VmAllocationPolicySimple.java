@@ -16,7 +16,7 @@ import java.util.Map;
 import org.cloudbus.cloudsim.core.CloudSim;
 
 /**
- * 简单的VM非配策略，将VM非配给使用PE最少的物理机
+ * 简单的VM非配策略，将VM非配给可用PE数最多的物理机
  * VmAllocationPolicySimple is an VmAllocationPolicy that chooses, as the host for a VM, the host
  * with less PEs in use.
  * 

@@ -87,8 +87,8 @@ public class Host {
 	}
 
 	/**
-	 * Requests updating of processing of cloudlets in the VMs running in this host.
-	 * 
+	 * 用来指导每个VM更新它们在数据中心实体中的任务单元状态（结束，悬挂，执行）Requests updating of processing of cloudlets in the VMs running in this host.
+	 * 返回物理机中虚拟机预计最找完成时间
 	 * @param currentTime the current time
 	 * @return expected time of completion of the next cloudlet in all VMs in this host.
 	 *         Double.MAX_VALUE if there is no future events expected in this host

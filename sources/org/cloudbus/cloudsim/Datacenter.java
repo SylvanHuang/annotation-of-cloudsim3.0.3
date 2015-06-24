@@ -428,7 +428,7 @@ public class Datacenter extends SimEntity {
 	 */
 	protected void processVmCreate(SimEvent ev, boolean ack) {
 		Vm vm = (Vm) ev.getData();	//获取需要创建的虚拟机对象
-		//获取数据中心的虚拟机分配策略，并未虚拟机分配一台物理机
+		//获取数据中心的虚拟机分配策略，并未虚拟机分配一台物理机，并且在物理机上面创建虚拟机
 		boolean result = getVmAllocationPolicy().allocateHostForVm(vm);
 		// 如果数据中心代理发送的是带ACK的创建虚拟机事件，则需要向数据中心代理发送一个虚拟机创建的ACK事件，其中携带了一些虚拟机的信息，包括此次创建虚拟机成功与否
 		if (ack) {
@@ -452,7 +452,7 @@ public class Datacenter extends SimEntity {
 			}
 
 			vm.updateVmProcessing(CloudSim.clock(), getVmAllocationPolicy().getHost(vm).getVmScheduler()
-					.getAllocatedMipsForVm(vm));
+					.getAllocatedMipsForVm(vm));//getAllocatedMipsForVm获取分配给虚拟机的处理资源列表
 		}
 
 	}
@@ -685,7 +685,7 @@ public class Datacenter extends SimEntity {
 			Cloudlet cl = (Cloudlet) ev.getData();
 
 			// checks whether this Cloudlet has finished or not
-			if (cl.isFinished()) {
+			if (cl.isFinished()) {//判断云任务是否完成
 				String name = CloudSim.getEntityName(cl.getUserId());
 				Log.printLine(getName() + ": Warning - Cloudlet #" + cl.getCloudletId() + " owned by " + name
 						+ " is already completed/finished.");
@@ -726,7 +726,7 @@ public class Datacenter extends SimEntity {
 			Host host = getVmAllocationPolicy().getHost(vmId, userId);
 			Vm vm = host.getVm(vmId, userId);//拿到相应的虚拟机
 			CloudletScheduler scheduler = vm.getCloudletScheduler();//取出相应虚拟机的CloudletScheduler的
-			double estimatedFinishTime = scheduler.cloudletSubmit(cl, fileTransferTime);
+			double estimatedFinishTime = scheduler.cloudletSubmit(cl, fileTransferTime);//云调度器提交云任务
 
 			// if this cloudlet is in the exec queue
 			if (estimatedFinishTime > 0.0 && !Double.isInfinite(estimatedFinishTime)) {
@@ -869,12 +869,13 @@ public class Datacenter extends SimEntity {
 		// R: for term is to allow loop at simulation start. Otherwise, one initial
 		// simulation step is skipped and schedulers are not properly initialized
 		if (CloudSim.clock() < 0.111 || CloudSim.clock() > getLastProcessTime() + CloudSim.getMinTimeBetweenEvents()) {
+			// 拿到数据中心的物理机列表
 			List<? extends Host> list = getVmAllocationPolicy().getHostList();
 			double smallerTime = Double.MAX_VALUE;
-			// for each host...
+			// for each host... 更新每一个Host,返回它们中最短完成时间值被传送到数据中心实体 
 			for (int i = 0; i < list.size(); i++) {
 				Host host = list.get(i);
-				// inform VMs to update processing
+				// 用来指导物理机中每个VM更新它们在数据中心实体中的任务单元状态（结束，悬挂，执行）inform VMs to update processing
 				double time = host.updateVmsProcessing(CloudSim.clock());
 				// what time do we expect that the next cloudlet will finish?
 				if (time < smallerTime) {
@@ -885,7 +886,7 @@ public class Datacenter extends SimEntity {
 			if (smallerTime < CloudSim.clock() + CloudSim.getMinTimeBetweenEvents() + 0.01) {
 				smallerTime = CloudSim.clock() + CloudSim.getMinTimeBetweenEvents() + 0.01;
 			}
-			if (smallerTime != Double.MAX_VALUE) {
+			if (smallerTime != Double.MAX_VALUE) {//说明数据中心中主机中云任务还没有执行完，
 				schedule(getId(), (smallerTime - CloudSim.clock()), CloudSimTags.VM_DATACENTER_EVENT);
 			}
 			setLastProcessTime(CloudSim.clock());
