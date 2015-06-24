@@ -33,7 +33,7 @@ import org.cloudbus.cloudsim.Vm;
  */
 public class PeProvisionerSimple extends PeProvisioner {
 
-	/** 虚拟机ID和分配的处理能力的映射表 ，这里表明，一个虚拟机可能不止一次分配处理能力 The pe table. */
+	/** 虚拟机ID和分配的处理能力的映射表 The pe table. */
 	private Map<String, List<Double>> peTable;
 
 	/**
@@ -59,7 +59,7 @@ public class PeProvisionerSimple extends PeProvisioner {
 	}
 
 	/*
-	 * (non-Javadoc)
+	 * (non-Javadoc)给虚拟机分配处理能力
 	 * @see cloudsim.provisioners.PeProvisioner#allocateMipsForVm(java.lang.String, double)
 	 */
 	@Override
@@ -73,12 +73,12 @@ public class PeProvisionerSimple extends PeProvisioner {
 		List<Double> allocatedMips;
 
 		if (getPeTable().containsKey(vmUid)) {
-			//如果此虚拟机不是第一次分配处理器资源
+			//虚拟机已经分配过处理资源
 			allocatedMips = getPeTable().get(vmUid);
 		} else {
 			allocatedMips = new ArrayList<Double>();
 		}
-		
+		//继续给虚拟机分配新的处理资源
 		allocatedMips.add(mips);
 
 		// 减少PE可用的处理器资源

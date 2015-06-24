@@ -97,22 +97,18 @@ public class CloudSimExample1 {
 			// create VM	b，创建一个虚拟机
 			// new CloudletSchedulerTimeShared()设置虚拟机的调度策略
 			Vm vm = new Vm(vmid, brokerId, mips, pesNumber, ram, bw, size, vmm, new CloudletSchedulerTimeShared());	
-
 			// add the VM to the vmList	c，把虚拟机假如虚拟机列表
 			vmlist.add(vm);
-
 			// submit vm list to the broker	d，将虚拟机列表提交到数据中心代理中
 			broker.submitVmList(vmlist);
-
 			// 5，Fifth step: Create one Cloudlet	创建云任务
 			cloudletList = new ArrayList<Cloudlet>();
-
 			// Cloudlet properties	云任务参数
 			int id = 0;
 			long length = 400000;
 			long fileSize = 300;
 			long outputSize = 300;
-			UtilizationModel utilizationModel = new UtilizationModelFull();//设置资源使用的方法模型
+			UtilizationModel utilizationModel = new UtilizationModelFull();//设置资源使用率模型
 
 			Cloudlet cloudlet = new Cloudlet(id, length, pesNumber, fileSize, outputSize, utilizationModel, utilizationModel, utilizationModel);
 			cloudlet.setUserId(brokerId);
@@ -123,12 +119,9 @@ public class CloudSimExample1 {
 
 			// submit cloudlet list to the broker
 			broker.submitCloudletList(cloudletList);	//将云任务提交给代理
-
 			// 6,Sixth step: Starts the simulation
 			CloudSim.startSimulation();		//开始模拟
-			
 			CloudSim.stopSimulation();		//结束模拟
-
 			//7，Final step: Print results when simulation is over 输出结果
 			List<Cloudlet> newList = broker.getCloudletReceivedList();
 			printCloudletList(newList);

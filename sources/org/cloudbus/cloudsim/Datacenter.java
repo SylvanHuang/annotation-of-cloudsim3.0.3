@@ -37,7 +37,7 @@ public class Datacenter extends SimEntity {
 	/** The regional cis name. */
 	private String regionalCisName;
 
-	/** The vm provisioner. */
+	/** 虚拟机分配策略 The vm provisioner. */
 	private VmAllocationPolicy vmAllocationPolicy;
 
 	/** 最后一次处理的时间 The last process time. */
@@ -49,7 +49,7 @@ public class Datacenter extends SimEntity {
 	/** The vm list. */
 	private List<? extends Vm> vmList;
 
-	/** The scheduling interval. */
+	/** 调度间隔The scheduling interval. */
 	private double schedulingInterval;
 
 	/**

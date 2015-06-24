@@ -46,14 +46,14 @@ public class VmSchedulerSpaceShared extends VmScheduler {
 	}
 
 	/*
-	 * (non-Javadoc)
+	 * (non-Javadoc)空间共享
 	 * @see org.cloudbus.cloudsim.VmScheduler#allocatePesForVm(org.cloudbus.cloudsim.Vm,
 	 * java.util.List)
 	 */
 	@Override
 	public boolean allocatePesForVm(Vm vm, List<Double> mipsShare) {
 		// if there is no enough free PEs, fails
-		//如果没有足够的处理单元，分配失败
+		//如果没有足够的处理单元，分配失败：这里是空间共享，所以没有足够的空闲的处理单元，分配就失败
 		if (getFreePes().size() < mipsShare.size()) {
 			return false;
 		}
@@ -78,7 +78,8 @@ public class VmSchedulerSpaceShared extends VmScheduler {
 		if (mipsShare.size() > selectedPes.size()) {
 			return false;
 		}
-		//从空闲的处理单元列表中移除选中的处理单元
+		// 从空闲的处理单元列表中移除选中的处理单元，因为是空间共享策略，所以这些处理单元被独占了，因此从空闲的处理单元中被移除，其他虚拟机此刻不能再来申请此处理单元了
+		// 所以对于，空间共享，需要满足两个条件，一是处理单元个数足够，二是总的处理能力足够
 		getFreePes().removeAll(selectedPes);
 
 		getPeAllocationMap().put(vm.getUid(), selectedPes);

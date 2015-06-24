@@ -68,7 +68,7 @@ public class VmSchedulerTimeShared extends VmScheduler {
 	}
 
 	/**
-	 * Allocate pes for vm.
+	 * 时间共享 Allocate pes for vm.
 	 * 
 	 * @param vmUid the vm uid
 	 * @param mipsShareRequested the mips share requested
@@ -92,7 +92,7 @@ public class VmSchedulerTimeShared extends VmScheduler {
 		if (getAvailableMips() < totalRequestedMips) {
 			return false;
 		}
-
+		//放入请求表中
 		getMipsMapRequested().put(vmUid, mipsShareRequested);
 		setPesInUse(getPesInUse() + mipsShareRequested.size());
 

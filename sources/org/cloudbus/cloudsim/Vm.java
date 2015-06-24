@@ -31,7 +31,7 @@ public class Vm {
 	/** The uid. */
 	private String uid;
 
-	/** The size. */
+	/** 镜像大小The size. */
 	private long size;
 
 	/** The MIPS. */
