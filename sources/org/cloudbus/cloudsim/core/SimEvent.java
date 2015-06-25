@@ -21,10 +21,10 @@ public class SimEvent implements Cloneable, Comparable<SimEvent> {
 	/** 内部事件类型 就是CloudSim的processEvent函数处理的事件，最基本的功能就是将事件从future移除到延迟队列中 internal event type **/
 	private final int etype;
 
-	/** 事件发生的时间 time at which event should occur **/
+	/** 事件发生的时间=时间在send那个时刻的时钟，加上事件的延迟  time at which event should occur **/
 	private final double time;
 
-	/** time that the event was removed from the queue for service **/
+	/** 事件从事件对队列中移除的时间 time that the event was removed from the queue for service **/
 	private double endWaitingTime;
 
 	/** 事件发送实体的ID id of entity who scheduled event **/

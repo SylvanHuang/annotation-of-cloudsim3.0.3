@@ -318,7 +318,7 @@ public class CloudSim {
 	/** The deferred event queue. */
 	protected static DeferredQueue deferred;
 
-	/** 模拟计时时钟 The simulation clock. */
+	/** 模拟计时时钟, 在CloudSim.processEvent()有更新时钟The simulation clock. */
 	private static double clock;
 
 	/** Flag for checking if the simulation is running. */
@@ -601,7 +601,7 @@ public class CloudSim {
 		if (delay < 0) {
 			throw new IllegalArgumentException("Send delay can't be negative.");
 		}
-
+		//事件ocuur的时钟，等于当前时钟加上延迟delay
 		SimEvent e = new SimEvent(SimEvent.SEND, clock + delay, src, dest, tag, data);
 		future.addEvent(e);
 	}
@@ -746,7 +746,7 @@ public class CloudSim {
 	//
 
 	/**
-	 * Processes an event.
+	 * Processes an event. 实际上主要的工作是完成将future队列中的事件移除到延迟队列中
 	 * CloudSim处理的是内部事件，etype
 	 * @param e the e
 	 */
@@ -757,7 +757,8 @@ public class CloudSim {
 		if (e.eventTime() < clock) {
 			throw new IllegalArgumentException("Past event detected.");
 		}
-		clock = e.eventTime();	//更新时钟
+		//更新时钟
+		clock = e.eventTime();	
 
 		// Ok now process it
 		switch (e.getType()) {	// getType返回内部事件类型
@@ -883,7 +884,7 @@ public class CloudSim {
 		}
 		while (true) {
 			//runClockTick()涉及了事件的处理
-			if (runClockTick() || abruptTerminate) {
+			if (runClockTick() || abruptTerminate) {//时钟更新
 				break;
 			}
 

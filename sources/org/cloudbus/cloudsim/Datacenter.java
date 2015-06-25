@@ -440,7 +440,8 @@ public class Datacenter extends SimEntity {
 				data[2] = CloudSimTags.TRUE;	//代表创建成功
 			} else {
 				data[2] = CloudSimTags.FALSE;	//代表创建失败
-			}//向数据中心代理发送一个虚拟机创建的ACK事件，其中携带了一些虚拟机的信息，包括此次创建虚拟机成功与否
+			}
+			//向数据中心代理发送一个虚拟机创建的ACK事件，其中携带了一些虚拟机的信息，包括此次创建虚拟机成功与否
 			send(vm.getUserId(), CloudSim.getMinTimeBetweenEvents(), CloudSimTags.VM_CREATE_ACK, data);
 		}
 

@@ -610,7 +610,7 @@ public abstract class SimEntity implements Cloneable {
 	/**
 	 * Sends an event/message to another entity by <tt>delaying</tt> the simulation time from the
 	 * current time, with a tag representing the event type.
-	 * 
+	 * sendNow()是没有延迟的发送
 	 * @param entityId the id number of the destination entity
 	 * @param delay how long from the current simulation time the event should be sent. If delay is
 	 *            a negative number, then it will be changed to 0
