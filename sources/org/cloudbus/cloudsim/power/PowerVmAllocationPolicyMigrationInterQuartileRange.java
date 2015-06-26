@@ -16,7 +16,7 @@ import org.cloudbus.cloudsim.Vm;
 import org.cloudbus.cloudsim.util.MathUtil;
 
 /**
- * The Inter Quartile Range (IQR) VM allocation policy.
+ * 四分位居 The Inter Quartile Range (IQR) VM allocation policy.
  * 
  * If you are using any algorithms, policies or workload included in the power package, please cite
  * the following paper:

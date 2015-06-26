@@ -16,6 +16,7 @@ import org.cloudbus.cloudsim.Vm;
 import org.cloudbus.cloudsim.util.MathUtil;
 
 /**
+ * 选择最大相关性的虚拟机进行迁移
  * The Maximum Correlation (MC) VM selection policy.
  * 
  * If you are using any algorithms, policies or workload included in the power package, please cite
@@ -75,7 +76,7 @@ public class PowerVmSelectionPolicyMaximumCorrelation extends PowerVmSelectionPo
 	}
 
 	/**
-	 * Gets the utilization matrix.
+	 * 返回使用率矩阵 Gets the utilization matrix.
 	 * 
 	 * @param vmList the host
 	 * @return the utilization matrix
@@ -111,7 +112,7 @@ public class PowerVmSelectionPolicyMaximumCorrelation extends PowerVmSelectionPo
 	}
 
 	/**
-	 * Gets the correlation coefficients.
+	 * 计算相关系数 Gets the correlation coefficients.
 	 * 
 	 * @param data the data
 	 * @return the correlation coefficients

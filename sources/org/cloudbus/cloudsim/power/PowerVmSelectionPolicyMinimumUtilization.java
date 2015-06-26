@@ -31,7 +31,7 @@ import org.cloudbus.cloudsim.core.CloudSim;
 public class PowerVmSelectionPolicyMinimumUtilization extends PowerVmSelectionPolicy {
 
 	/*
-	 * 返回总的使用率最小的虚拟机进行迁移（使用率小，说明负载小，可以进行迁移整合）
+	 * 返回总的使用率最小的虚拟机进行迁移
 	 * (non-Javadoc)
 	 * @see
 	 * org.cloudbus.cloudsim.experiments.power.PowerVmSelectionPolicy#getVmsToMigrate(org.cloudbus

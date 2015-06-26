@@ -82,6 +82,7 @@ public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAl
 	}
 
 	/**
+	 * Algorithm 1：VM Placement Optimization
 	 * Optimize allocation of the VMs according to current utilization.
 	 * 
 	 * @param vmList the vm list
@@ -93,6 +94,7 @@ public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAl
 		ExecutionTimeMeasurer.start("optimizeAllocationTotal");
 
 		ExecutionTimeMeasurer.start("optimizeAllocationHostSelection");
+		// 遍历主机列表，取出，有过载的主机
 		List<PowerHostUtilizationHistory> overUtilizedHosts = getOverUtilizedHosts();
 		getExecutionTimeHistoryHostSelection().add(
 				ExecutionTimeMeasurer.end("optimizeAllocationHostSelection"));

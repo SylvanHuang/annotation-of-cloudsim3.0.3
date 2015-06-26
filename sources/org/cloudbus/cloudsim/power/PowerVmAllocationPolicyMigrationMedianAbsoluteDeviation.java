@@ -16,6 +16,7 @@ import org.cloudbus.cloudsim.Vm;
 import org.cloudbus.cloudsim.util.MathUtil;
 
 /**
+ * 绝对中位偏差
  * The Median Absolute Deviation (MAD) VM allocation policy.
  * 
  * If you are using any algorithms, policies or workload included in the power package, please cite
@@ -33,7 +34,7 @@ public class PowerVmAllocationPolicyMigrationMedianAbsoluteDeviation extends
 		PowerVmAllocationPolicyMigrationAbstract {
 
 	/** The safety parameter. */
-	private double safetyParameter = 0;
+	private double safetyParameter = 0; //在测试的例子中设置的是2.5
 
 	/** The fallback vm allocation policy. */
 	private PowerVmAllocationPolicyMigrationAbstract fallbackVmAllocationPolicy;
@@ -83,9 +84,9 @@ public class PowerVmAllocationPolicyMigrationMedianAbsoluteDeviation extends
 	@Override
 	protected boolean isHostOverUtilized(PowerHost host) {
 		PowerHostUtilizationHistory _host = (PowerHostUtilizationHistory) host;
-		double upperThreshold = 0;
+		double upperThreshold = 0;//最大阈值
 		try {
-			upperThreshold = 1 - getSafetyParameter() * getHostUtilizationMad(_host);
+			upperThreshold = 1 - getSafetyParameter() * getHostUtilizationMad(_host);//计算最大阈值的方法
 		} catch (IllegalArgumentException e) {
 			return getFallbackVmAllocationPolicy().isHostOverUtilized(host);
 		}
@@ -99,7 +100,7 @@ public class PowerVmAllocationPolicyMigrationMedianAbsoluteDeviation extends
 	}
 
 	/**
-	 * Gets the host utilization mad.
+	 * 计算出使用率的中位数绝对离差 Gets the host utilization mad.
 	 * 
 	 * @param host the host
 	 * @return the host utilization mad

@@ -259,8 +259,8 @@ public class Helper {
 		int numberOfVms = vms.size();
 
 		double totalSimulationTime = lastClock;
-		double energy = datacenter.getPower() / (3600 * 1000);
-		int numberOfMigrations = datacenter.getMigrationCount();
+		double energy = datacenter.getPower() / (3600 * 1000);	//总的能耗
+		int numberOfMigrations = datacenter.getMigrationCount();//虚拟机迁移次数统计
 
 		Map<String, Double> slaMetrics = getSlaMetrics(vms);
 
@@ -580,7 +580,7 @@ public class Helper {
 			boolean previousIsInMigration = false;
 			// 虚拟机状态的历史
 			for (VmStateHistoryEntry entry : vm.getStateHistory()) {
-				if (previousTime != -1) {
+				if (previousTime != -1) {//第一次分配
 					double timeDiff = entry.getTime() - previousTime;
 					vmTotalAllocated += previousAllocated * timeDiff;
 					vmTotalRequested += previousRequested * timeDiff;

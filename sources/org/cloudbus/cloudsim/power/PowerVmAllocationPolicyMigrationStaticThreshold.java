@@ -14,6 +14,7 @@ import org.cloudbus.cloudsim.Host;
 import org.cloudbus.cloudsim.Vm;
 
 /**
+ * 判断Host是否过载的方法：静态阈值
  * The Static Threshold (THR) VM allocation policy.
  * 
  * If you are using any algorithms, policies or workload included in the power package, please cite
@@ -61,7 +62,7 @@ public class PowerVmAllocationPolicyMigrationStaticThreshold extends PowerVmAllo
 			totalRequestedMips += vm.getCurrentRequestedTotalMips();
 		}
 		double utilization = totalRequestedMips / host.getTotalMips();
-		return utilization > getUtilizationThreshold();
+		return utilization > getUtilizationThreshold();//判断是否大于静态阈值0.9，如果大于，则认为是过载
 	}
 
 	/**

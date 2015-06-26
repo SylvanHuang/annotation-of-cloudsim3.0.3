@@ -19,6 +19,7 @@ import org.cloudbus.cloudsim.VmAllocationPolicy;
 import org.cloudbus.cloudsim.core.CloudSim;
 
 /**
+ * 虚拟机分配策略：
  * The class of an abstract power-aware VM allocation policy.
  * 
  * If you are using any algorithms, policies or workload included in the power package, please cite

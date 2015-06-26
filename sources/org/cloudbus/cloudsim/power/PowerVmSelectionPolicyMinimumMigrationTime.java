@@ -13,6 +13,7 @@ import java.util.List;
 import org.cloudbus.cloudsim.Vm;
 
 /**
+ * 最小迁移时间： 是根据当前VM使用的内存大小/当前可用带宽来评估的
  * The Minimum Migration Time (MMT) VM selection policy.
  * 
  * If you are using any algorithms, policies or workload included in the power package, please cite
@@ -29,6 +30,7 @@ import org.cloudbus.cloudsim.Vm;
 public class PowerVmSelectionPolicyMinimumMigrationTime extends PowerVmSelectionPolicy {
 
 	/*
+	 * 返回最小的迁移时间的虚拟机作为迁移的虚拟机
 	 * (non-Javadoc)
 	 * @see
 	 * org.cloudbus.cloudsim.experiments.power.PowerVmSelectionPolicy#getVmsToMigrate(org.cloudbus
@@ -36,7 +38,7 @@ public class PowerVmSelectionPolicyMinimumMigrationTime extends PowerVmSelection
 	 */
 	@Override
 	public Vm getVmToMigrate(PowerHost host) {
-		List<PowerVm> migratableVms = getMigratableVms(host);
+		List<PowerVm> migratableVms = getMigratableVms(host);//返回主机可以迁移的虚拟机列表
 		if (migratableVms.isEmpty()) {
 			return null;
 		}
@@ -46,7 +48,7 @@ public class PowerVmSelectionPolicyMinimumMigrationTime extends PowerVmSelection
 			if (vm.isInMigration()) {
 				continue;
 			}
-			double metric = vm.getRam();
+			double metric = vm.getRam();	//返回虚拟机使用的内存大小
 			if (metric < minMetric) {
 				minMetric = metric;
 				vmToMigrate = vm;

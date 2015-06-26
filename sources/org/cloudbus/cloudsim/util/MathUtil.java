@@ -62,7 +62,7 @@ public class MathUtil {
 	}
 
 	/**
-	 * Gets the median.
+	 * 获取中位数Gets the median.
 	 * 
 	 * @param list the list
 	 * 
@@ -155,7 +155,7 @@ public class MathUtil {
 	}
 
 	/**
-	 * Gets the mad.
+	 * 计算中位数绝对离差 Gets the mad.
 	 * 
 	 * @param data the data
 	 * @return the mad
@@ -163,18 +163,18 @@ public class MathUtil {
 	public static double mad(final double[] data) {
 		double mad = 0;
 		if (data.length > 0) {
-			double median = median(data);
-			double[] deviationSum = new double[data.length];
+			double median = median(data);//中位数
+			double[] deviationSum = new double[data.length];	//记录所有数的中位数离差
 			for (int i = 0; i < data.length; i++) {
 				deviationSum[i] = Math.abs(median - data[i]);
 			}
-			mad = median(deviationSum);
+			mad = median(deviationSum);//返回中位数离差的中位数
 		}
 		return mad;
 	}
 
 	/**
-	 * Gets the IQR.
+	 * 计算四分位距，相当于3/4位数-1/4位数。也就是上四分位数减去下四分位数  Gets the IQR.
 	 * 
 	 * @param data the data
 	 * @return the IQR
