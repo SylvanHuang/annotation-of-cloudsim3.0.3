@@ -153,7 +153,7 @@ public class Vm {
 	}
 
 	/**
-	 * 获取虚拟机请求的MIPS Gets the current requested mips.
+	 * 获取虚拟机请求的MIPS 如果是正在实例化，则返回虚拟机编程时候设置的MIPS，否则 Gets the current requested mips.
 	 * 
 	 * @return the current requested mips
 	 */

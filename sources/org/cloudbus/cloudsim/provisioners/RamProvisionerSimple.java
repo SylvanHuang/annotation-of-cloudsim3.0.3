@@ -14,6 +14,7 @@ import java.util.Map;
 import org.cloudbus.cloudsim.Vm;
 
 /**
+ * 最大努力交付，只要有足够的内粗可以分配，就分配给虚拟机，并返回分配成功
  * RamProvisionerSimple is an extension of RamProvisioner which uses a best-effort policy to
  * allocate memory to a VM.
  * 
@@ -57,7 +58,7 @@ public class RamProvisionerSimple extends RamProvisioner {
 			vm.setCurrentAllocatedRam(getAllocatedRamForVm(vm));
 			return true;
 		}
-		//
+		// else部分
 		vm.setCurrentAllocatedRam(getAllocatedRamForVm(vm));
 
 		return false;

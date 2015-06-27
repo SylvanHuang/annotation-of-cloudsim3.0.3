@@ -52,7 +52,9 @@ public class CloudletSchedulerTimeShared extends CloudletScheduler {
 
 	/**
 	 * Updates the processing of cloudlets running under management of this scheduler.
-	 * 
+	 * 更新云任务的执行进度，根据currentTime和preciousTime之间的差值，作为时间片，更新正在执行的云任务的进度
+	 * 	如果在这个时间片内，云任务执行完了，则从正在执行的云任务列表中移除
+	 *  如果还没有执行完的就评估云任务的完成时间
 	 * @param currentTime current simulation time
 	 * @param mipsShare array with MIPS share of each processor available to the scheduler
 	 * @return time predicted completion time of the earliest finishing cloudlet, or 0 if there is
@@ -67,6 +69,7 @@ public class CloudletSchedulerTimeShared extends CloudletScheduler {
 
 		// 更新正在执行的任务列表中的所有任务的进度条
 		for (ResCloudlet rcl : getCloudletExecList()) {
+			//注意getCapacity的实现
 			rcl.updateCloudletFinishedSoFar((long) (getCapacity(mipsShare) * timeSpam * rcl.getNumberOfPes() * Consts.MILLION));
 		}
 		
@@ -123,13 +126,15 @@ public class CloudletSchedulerTimeShared extends CloudletScheduler {
 				cpus++;
 			}
 		}
+		//capacity总的计算资源
+		//currentCPUs当前CPU数目
 		currentCPUs = cpus;
 
-		int pesInUse = 0;
+		int pesInUse = 0;//正在执行的云任务列表中所需要的PE总数
 		for (ResCloudlet rcl : getCloudletExecList()) {
 			pesInUse += rcl.getNumberOfPes();
 		}
-
+		//将每个PE的处理能力均分
 		if (pesInUse > currentCPUs) {
 			capacity /= pesInUse;
 		} else {

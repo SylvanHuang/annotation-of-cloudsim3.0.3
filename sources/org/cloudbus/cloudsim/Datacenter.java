@@ -448,7 +448,7 @@ public class Datacenter extends SimEntity {
 		if (result) {//如果创建虚拟机成功
 			getVmList().add(vm);//将虚拟机加入数据中心的虚拟机列表
 
-			if (vm.isBeingInstantiated()) {
+			if (vm.isBeingInstantiated()) {//虚拟机实例化完成，重置标志位
 				vm.setBeingInstantiated(false);
 			}
 
