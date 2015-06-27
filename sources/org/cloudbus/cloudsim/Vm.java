@@ -75,7 +75,7 @@ public class Vm {
 	private List<Double> currentAllocatedMips;
 
 	/** The VM is being instantiated. */
-	// 虚拟机是否被实例化？？？？
+	// 虚拟机是否正在实例化
 	private boolean beingInstantiated;
 
 	/** The mips allocation history. */
@@ -215,9 +215,9 @@ public class Vm {
 	 * @return the current requested ram
 	 */
 	public int getCurrentRequestedRam() {
-		if (isBeingInstantiated()) {
+		if (isBeingInstantiated()) {//如果正在实例化，则返回虚拟机所申请的内存大小
 			return getRam();
-		}
+		}//否则返回，当前内存使用率乘以虚拟机内存容量
 		return (int) (getCloudletScheduler().getCurrentRequestedUtilizationOfRam() * getRam());
 	}
 

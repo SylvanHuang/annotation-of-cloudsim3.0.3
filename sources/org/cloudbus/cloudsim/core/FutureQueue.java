@@ -25,7 +25,7 @@ import java.util.TreeSet;
  */
 public class FutureQueue {
 
-	/** The sorted set. */
+	/** 有序队列，总是先取出时间最小的事件进行执行 The sorted set. */
 	private final SortedSet<SimEvent> sortedSet = new TreeSet<SimEvent>();
 
 	/** The serial. */

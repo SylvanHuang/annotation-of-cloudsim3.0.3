@@ -62,7 +62,7 @@ public class CloudSim {
 	/** 终止模拟仿真的时间 The termination time. */
 	private static double terminateAt = -1;
 
-	/** The minimal time between events. Events within shorter periods after the last event are discarded. */
+	/** Cloudsim依靠这个驱动云任务的执行的推进，也是云任务的最小推进的时间步长 The minimal time between events. Events within shorter periods after the last event are discarded. */
 	private static double minTimeBetweenEvents = 0.1;
 	
 	/**
@@ -351,7 +351,7 @@ public class CloudSim {
 		future = new FutureQueue();
 		deferred = new DeferredQueue();
 		waitPredicates = new HashMap<Integer, Predicate>();
-		clock = 0;
+		clock = 0;	//全局时钟初始化
 		running = false;
 	}
 

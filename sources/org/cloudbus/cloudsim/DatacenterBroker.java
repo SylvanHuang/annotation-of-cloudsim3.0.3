@@ -49,7 +49,7 @@ public class DatacenterBroker extends SimEntity {
 	/** 统计云任务提交次数The cloudlets submitted. */
 	protected int cloudletsSubmitted;
 
-	/** The vms requested. */
+	/** 虚拟机创建请求次数统计 The vms requested. */
 	protected int vmsRequested;
 
 	/** The vms acks. */
@@ -58,13 +58,13 @@ public class DatacenterBroker extends SimEntity {
 	/** The vms destroyed. */
 	protected int vmsDestroyed;
 
-	/** The datacenter ids list. */
+	/** 可能管理多个数据中心The datacenter ids list. */
 	protected List<Integer> datacenterIdsList;
 
-	/** The datacenter requested ids list. */
+	/** 收到虚拟机创建请求的数据中心列表 The datacenter requested ids list. */
 	protected List<Integer> datacenterRequestedIdsList;
 
-	/** The vms to datacenters map. */
+	/** 虚拟机和所在的数据中心map的对应关系表 The vms to datacenters map. */
 	protected Map<Integer, Integer> vmsToDatacentersMap;
 
 	/** The datacenter characteristics list. */
@@ -181,11 +181,13 @@ public class DatacenterBroker extends SimEntity {
 	 * @post $none
 	 */
 	protected void processResourceCharacteristics(SimEvent ev) {
+		//数据中心的characteristics是放在data部分传过来的
 		DatacenterCharacteristics characteristics = (DatacenterCharacteristics) ev.getData();
 		getDatacenterCharacteristicsList().put(characteristics.getId(), characteristics);
-
+		// 收到的characteristics个数和数据中心的个数相同，说明所有的数据中心的属性查询信息都已经成功获取，
 		if (getDatacenterCharacteristicsList().size() == getDatacenterIdsList().size()) {
 			setDatacenterRequestedIdsList(new ArrayList<Integer>());
+			//知道了数据中心的信息后，就可以开心创建虚拟机了
 			createVmsInDatacenter(getDatacenterIdsList().get(0));
 		}
 	}

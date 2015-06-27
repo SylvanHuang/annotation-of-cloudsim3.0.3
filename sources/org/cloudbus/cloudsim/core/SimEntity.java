@@ -412,7 +412,7 @@ public abstract class SimEntity implements Cloneable {
 	 */
 	public abstract void shutdownEntity();
 
-	public void run() {
+	public void run() {		
 		SimEvent ev = evbuf != null ? evbuf : getNextEvent();
 		// 处理相关实体在 延迟队列中的所有事件
 		while (ev != null) {

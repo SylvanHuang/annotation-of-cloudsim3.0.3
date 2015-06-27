@@ -237,6 +237,7 @@ public class Helper {
 	}
 
 	/**
+	 * 输出模拟结果
 	 * Prints the results.
 	 * 
 	 * @param datacenter the datacenter
@@ -585,7 +586,7 @@ public class Helper {
 					vmTotalAllocated += previousAllocated * timeDiff;
 					vmTotalRequested += previousRequested * timeDiff;
 
-					if (previousAllocated < previousRequested) {
+					if (previousAllocated < previousRequested) {	//
 						slaViolation.add((previousRequested - previousAllocated) / previousRequested);
 						if (previousIsInMigration) {
 							vmUnderAllocatedDueToMigration += (previousRequested - previousAllocated)
