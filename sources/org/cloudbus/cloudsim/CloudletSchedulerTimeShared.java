@@ -69,7 +69,7 @@ public class CloudletSchedulerTimeShared extends CloudletScheduler {
 
 		// 更新正在执行的任务列表中的所有任务的进度条
 		for (ResCloudlet rcl : getCloudletExecList()) {
-			//注意getCapacity的实现
+			//注意getCapacity的实现,这里将所有的处理器的处理能力均分给所有的处理单元
 			rcl.updateCloudletFinishedSoFar((long) (getCapacity(mipsShare) * timeSpam * rcl.getNumberOfPes() * Consts.MILLION));
 		}
 		

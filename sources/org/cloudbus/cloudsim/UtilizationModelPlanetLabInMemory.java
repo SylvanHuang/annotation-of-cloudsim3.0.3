@@ -67,6 +67,7 @@ public class UtilizationModelPlanetLabInMemory implements UtilizationModel {
 		if (time % getSchedulingInterval() == 0) {
 			return data[(int) time / (int) getSchedulingInterval()];
 		}
+		// floor向下取整，ceil向上取整
 		int time1 = (int) Math.floor(time / getSchedulingInterval());
 		int time2 = (int) Math.ceil(time / getSchedulingInterval());
 		double utilization1 = data[time1];

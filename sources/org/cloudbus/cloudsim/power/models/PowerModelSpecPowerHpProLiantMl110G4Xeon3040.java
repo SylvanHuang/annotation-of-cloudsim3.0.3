@@ -24,7 +24,7 @@ package org.cloudbus.cloudsim.power.models;
  * @since CloudSim Toolkit 3.0
  */
 public class PowerModelSpecPowerHpProLiantMl110G4Xeon3040 extends PowerModelSpecPower {
-
+	//HP ProLiant ML110 G4 (Intel Xeon 3040, 2 cores  1860 MHz, 4 GB)
 	/** The power. */
 	private final double[] power = { 86, 89.4, 92.6, 96, 99.5, 102, 106, 108, 112, 114, 117 };
 
