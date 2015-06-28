@@ -56,13 +56,13 @@ public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAl
 	/** The time history. */
 	private final Map<Integer, List<Double>> timeHistory = new HashMap<Integer, List<Double>>();
 
-	/** The execution time history vm selection. */
+	/** 虚拟机放置优化算法中 从过载的Host中选择出迁移的虚拟机所消耗的时间历史记录 The execution time history vm selection. */
 	private final List<Double> executionTimeHistoryVmSelection = new LinkedList<Double>();
 
-	/** The execution time history host selection. */
+	/** 虚拟机放置优化算法中 过载Host判断消耗的历史时间 The execution time history host selection. */
 	private final List<Double> executionTimeHistoryHostSelection = new LinkedList<Double>();
 
-	/** The execution time history vm reallocation. */
+	/** 虚拟机放置优化算法中 需要迁移的虚拟机重新分配消耗的时间 The execution time history vm reallocation. */
 	private final List<Double> executionTimeHistoryVmReallocation = new LinkedList<Double>();
 
 	/** The execution time history total. */
@@ -82,6 +82,7 @@ public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAl
 	}
 
 	/**
+	 * 在PowerDatacenter.updateCloudletProcessing()函数中被调用
 	 * Algorithm 1：VM Placement Optimization
 	 * Optimize allocation of the VMs according to current utilization.
 	 * 
@@ -91,23 +92,25 @@ public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAl
 	 */
 	@Override
 	public List<Map<String, Object>> optimizeAllocation(List<? extends Vm> vmList) {
-		ExecutionTimeMeasurer.start("optimizeAllocationTotal");
+		ExecutionTimeMeasurer.start("optimizeAllocationTotal");//记录总的VPO算法执行的时间
 
-		ExecutionTimeMeasurer.start("optimizeAllocationHostSelection");
-		// 遍历主机列表，取出，有过载的主机
+		ExecutionTimeMeasurer.start("optimizeAllocationHostSelection");//记录过载主机选择时间
+		//1， 遍历主机列表，取出，有过载的主机
 		List<PowerHostUtilizationHistory> overUtilizedHosts = getOverUtilizedHosts();
 		getExecutionTimeHistoryHostSelection().add(
 				ExecutionTimeMeasurer.end("optimizeAllocationHostSelection"));
-
+		//输出过载Host的信息
 		printOverUtilizedHosts(overUtilizedHosts);
-
+		//???保存当前分配状态
 		saveAllocation();
-
+		//2,从过载的Host中选择出迁移的虚拟机
 		ExecutionTimeMeasurer.start("optimizeAllocationVmSelection");
 		List<? extends Vm> vmsToMigrate = getVmsToMigrateFromHosts(overUtilizedHosts);
 		getExecutionTimeHistoryVmSelection().add(ExecutionTimeMeasurer.end("optimizeAllocationVmSelection"));
 
 		Log.printLine("Reallocation of VMs from the over-utilized hosts:");
+		
+		//3,将需要迁移的虚拟机从新分配,并返回迁移的虚拟机和Host的映射表
 		ExecutionTimeMeasurer.start("optimizeAllocationVmReallocation");
 		List<Map<String, Object>> migrationMap = getNewVmPlacement(vmsToMigrate, new HashSet<Host>(
 				overUtilizedHosts));
@@ -115,7 +118,9 @@ public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAl
 				ExecutionTimeMeasurer.end("optimizeAllocationVmReallocation"));
 		Log.printLine();
 
-		migrationMap.addAll(getMigrationMapFromUnderUtilizedHosts(overUtilizedHosts));
+		migrationMap.addAll(
+				//4，将欠载的Host中虚拟机找出来，并重新分配
+				getMigrationMapFromUnderUtilizedHosts(overUtilizedHosts));
 
 		restoreAllocation();
 
@@ -125,6 +130,7 @@ public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAl
 	}
 
 	/**
+	 * 
 	 * Gets the migration map from under utilized hosts.
 	 * 
 	 * @param overUtilizedHosts the over utilized hosts
@@ -133,15 +139,17 @@ public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAl
 	protected List<Map<String, Object>> getMigrationMapFromUnderUtilizedHosts(
 			List<PowerHostUtilizationHistory> overUtilizedHosts) {
 		List<Map<String, Object>> migrationMap = new LinkedList<Map<String, Object>>();
-		List<PowerHost> switchedOffHosts = getSwitchedOffHosts();
+		List<PowerHost> switchedOffHosts = getSwitchedOffHosts();//关闭的Host
 
 		// over-utilized hosts + hosts that are selected to migrate VMs to from over-utilized hosts
+		// 排除在欠载列表之外的Host列表，显然上一步找到的过载Host肯定不在潜在列表中，还有关闭的Host也在排除列表之内
 		Set<PowerHost> excludedHostsForFindingUnderUtilizedHost = new HashSet<PowerHost>();
 		excludedHostsForFindingUnderUtilizedHost.addAll(overUtilizedHosts);
 		excludedHostsForFindingUnderUtilizedHost.addAll(switchedOffHosts);
 		excludedHostsForFindingUnderUtilizedHost.addAll(extractHostListFromMigrationMap(migrationMap));
 
 		// over-utilized + under-utilized hosts
+		// 排除在虚拟机迁移列表之外的Host，显然过载的Host肯定不在虚拟机可以迁移的Host之内，关闭的Host也在排除列表之内
 		Set<PowerHost> excludedHostsForFindingNewVmPlacement = new HashSet<PowerHost>();
 		excludedHostsForFindingNewVmPlacement.addAll(overUtilizedHosts);
 		excludedHostsForFindingNewVmPlacement.addAll(switchedOffHosts);
@@ -149,20 +157,22 @@ public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAl
 		int numberOfHosts = getHostList().size();
 
 		while (true) {
+			// 如果Host都是在排除列表之外，那么退出循环
 			if (numberOfHosts == excludedHostsForFindingUnderUtilizedHost.size()) {
 				break;
 			}
-
+			
 			PowerHost underUtilizedHost = getUnderUtilizedHost(excludedHostsForFindingUnderUtilizedHost);
 			if (underUtilizedHost == null) {
 				break;
 			}
 
 			Log.printLine("Under-utilized host: host #" + underUtilizedHost.getId() + "\n");
-
+			//把找到的欠载host加入到欠载排除列表和虚拟机放置排除列表中
 			excludedHostsForFindingUnderUtilizedHost.add(underUtilizedHost);
 			excludedHostsForFindingNewVmPlacement.add(underUtilizedHost);
-
+			
+			//将欠载Host中的可以迁移的虚拟机列表返回
 			List<? extends Vm> vmsToMigrateFromUnderUtilizedHost = getVmsToMigrateFromUnderUtilizedHost(underUtilizedHost);
 			if (vmsToMigrateFromUnderUtilizedHost.isEmpty()) {
 				continue;
@@ -175,7 +185,7 @@ public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAl
 				}
 			}
 			Log.printLine();
-
+			// 在欠载Host中，对可以迁移的虚拟机进行迁移
 			List<Map<String, Object>> newVmPlacement = getNewVmPlacementFromUnderUtilizedHost(
 					vmsToMigrateFromUnderUtilizedHost,
 					excludedHostsForFindingNewVmPlacement);
@@ -185,7 +195,7 @@ public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAl
 			migrationMap.addAll(newVmPlacement);
 			Log.printLine();
 		}
-
+		//返回迁移的映射表
 		return migrationMap;
 	}
 
@@ -323,7 +333,7 @@ public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAl
 			List<? extends Vm> vmsToMigrate,
 			Set<? extends Host> excludedHosts) {
 		List<Map<String, Object>> migrationMap = new LinkedList<Map<String, Object>>();
-		PowerVmList.sortByCpuUtilization(vmsToMigrate);
+		PowerVmList.sortByCpuUtilization(vmsToMigrate);//按CPU使用率排序
 		for (Vm vm : vmsToMigrate) {
 			PowerHost allocatedHost = findHostForVm(vm, excludedHosts);
 			if (allocatedHost != null) {
@@ -334,7 +344,7 @@ public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAl
 				migrate.put("vm", vm);
 				migrate.put("host", allocatedHost);
 				migrationMap.add(migrate);
-			} else {
+			} else {//如果虚拟机迁移失败，则退出
 				Log.printLine("Not all VMs can be reallocated from the host, reallocation cancelled");
 				for (Map<String, Object> map : migrationMap) {
 					((Host) map.get("host")).vmDestroy((Vm) map.get("vm"));
@@ -347,6 +357,7 @@ public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAl
 	}
 
 	/**
+	 * 返回欠载Host中可以迁移的虚拟机列表
 	 * Gets the vms to migrate from hosts.
 	 * 
 	 * @param overUtilizedHosts the over utilized hosts
@@ -382,7 +393,7 @@ public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAl
 		List<Vm> vmsToMigrate = new LinkedList<Vm>();
 		for (Vm vm : host.getVmList()) {
 			if (!vm.isInMigration()) {
-				vmsToMigrate.add(vm);
+				vmsToMigrate.add(vm);	
 			}
 		}
 		return vmsToMigrate;
@@ -419,6 +430,7 @@ public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAl
 	}
 
 	/**
+	 * 返回一个欠载的Host，是找到一个最小负载的Host作为欠载Host返回
 	 * Gets the under utilized host.
 	 * 
 	 * @param excludedHosts the excluded hosts
@@ -429,8 +441,9 @@ public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAl
 		PowerHost underUtilizedHost = null;
 		for (PowerHost host : this.<PowerHost> getHostList()) {
 			if (excludedHosts.contains(host)) {
-				continue;
+				continue;//在排除Host列表中，不予考虑
 			}
+			//找到最小的负载的Host，做为欠载Host返回
 			double utilization = host.getUtilizationOfCpu();
 			if (utilization > 0 && utilization < minUtilization
 					&& !areAllVmsMigratingOutOrAnyVmMigratingIn(host)) {

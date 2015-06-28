@@ -53,7 +53,7 @@ public class Host {
 	/** Tells whether this machine is working properly or has failed. */
 	private boolean failed;
 
-	/** The vms migrating in. */
+	/** 迁移进来的虚拟机列表The vms migrating in. */
 	private final List<Vm> vmsMigratingIn = new ArrayList<Vm>();
 
 	/** The datacenter where the host is placed. */

@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 执行时间管理类
  * The class for measuring the execution time.
  * 
  * @author Anton Beloglazov

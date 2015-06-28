@@ -55,7 +55,7 @@ public class Vm {
 	/** The host. */
 	private Host host;
 
-	/** // 虚拟机迁移标志 In migration flag. */
+	/**虚拟机是否正在迁移  In migration flag. */
 	private boolean inMigration;
 
 	/** The current allocated size. */

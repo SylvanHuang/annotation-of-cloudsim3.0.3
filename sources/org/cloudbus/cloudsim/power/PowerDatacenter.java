@@ -98,7 +98,7 @@ public class PowerDatacenter extends Datacenter {
 
 			double minTime = updateCloudetProcessingWithoutSchedulingFutureEventsForce();
 
-			if (!isDisableMigrations()) {
+			if (!isDisableMigrations()) {//如果数据中心可以执行虚拟机迁移
 				List<Map<String, Object>> migrationMap = getVmAllocationPolicy().optimizeAllocation(
 						getVmList());
 
@@ -225,7 +225,7 @@ public class PowerDatacenter extends Datacenter {
 					currentTime,
 					timeFrameDatacenterEnergy);
 		}
-
+		//更新功耗
 		setPower(getPower() + timeFrameDatacenterEnergy);
 
 		checkCloudletCompletion();

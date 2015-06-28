@@ -574,7 +574,7 @@ public class Helper {
 		for (Vm vm : vms) {
 			double vmTotalAllocated = 0;
 			double vmTotalRequested = 0;
-			double vmUnderAllocatedDueToMigration = 0;
+			double vmUnderAllocatedDueToMigration = 0;//由于虚拟机迁移造成的
 			double previousTime = -1;
 			double previousAllocated = 0;
 			double previousRequested = 0;
