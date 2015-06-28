@@ -32,10 +32,10 @@ public class IqrMu {
 		boolean outputToFile = false;
 		String inputFolder = "";
 		String outputFolder = "";
-		String workload = "random"; // Random workload
-		String vmAllocationPolicy = "iqr"; // Inter Quartile Range (IQR) VM allocation policy
-		String vmSelectionPolicy = "mu"; // Minimum Utilization (MU) VM selection policy
-		String parameter = "1.5"; // the safety parameter of the IQR policy
+		String workload = "random"; 		// Random workload
+		String vmAllocationPolicy = "iqr"; 	// Inter Quartile Range (IQR) VM allocation policy
+		String vmSelectionPolicy = "mu"; 	// Minimum Utilization (MU) VM selection policy
+		String parameter = "1.5"; 			// the safety parameter of the IQR policy
 
 		new RandomRunner(
 				enableOutput,
