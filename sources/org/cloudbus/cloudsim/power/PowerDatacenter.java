@@ -44,7 +44,7 @@ public class PowerDatacenter extends Datacenter {
 	/** 不能执行迁移标志 false为可以进行迁移 The disable migrations. */
 	private boolean disableMigrations;
 
-	/** 云任务提交时间 The cloudlet submited. */
+	/** 云任务提交计数The cloudlet submited. */
 	private double cloudletSubmitted;
 
 	/** 迁移计数 The migration count. */

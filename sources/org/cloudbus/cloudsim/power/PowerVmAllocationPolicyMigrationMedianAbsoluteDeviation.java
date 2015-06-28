@@ -16,7 +16,7 @@ import org.cloudbus.cloudsim.Vm;
 import org.cloudbus.cloudsim.util.MathUtil;
 
 /**
- * 绝对中位偏差
+ * 判断过载：绝对中位偏差
  * The Median Absolute Deviation (MAD) VM allocation policy.
  * 
  * If you are using any algorithms, policies or workload included in the power package, please cite

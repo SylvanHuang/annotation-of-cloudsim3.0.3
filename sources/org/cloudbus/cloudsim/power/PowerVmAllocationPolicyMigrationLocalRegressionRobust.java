@@ -14,7 +14,7 @@ import org.cloudbus.cloudsim.Host;
 import org.cloudbus.cloudsim.util.MathUtil;
 
 /**
- * The Local Regression Robust (LRR) VM allocation policy.
+ * 判断过载：局部增强回归The Local Regression Robust (LRR) VM allocation policy.
  * 
  * If you are using any algorithms, policies or workload included in the power package, please cite
  * the following paper:

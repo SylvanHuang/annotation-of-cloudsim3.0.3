@@ -15,7 +15,7 @@ import org.cloudbus.cloudsim.Vm;
 import org.cloudbus.cloudsim.util.MathUtil;
 
 /**
- * The Local Regression (LR) VM allocation policy.
+ * 判断过载：局部回归The Local Regression (LR) VM allocation policy.
  * 
  * If you are using any algorithms, policies or workload included in the power package, please cite
  * the following paper:

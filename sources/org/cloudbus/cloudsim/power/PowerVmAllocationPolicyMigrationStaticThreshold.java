@@ -14,7 +14,7 @@ import org.cloudbus.cloudsim.Host;
 import org.cloudbus.cloudsim.Vm;
 
 /**
- * 判断Host是否过载的方法：静态阈值
+ * 判断过载：判断Host是否过载的方法：静态阈值
  * The Static Threshold (THR) VM allocation policy.
  * 
  * If you are using any algorithms, policies or workload included in the power package, please cite
