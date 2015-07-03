@@ -23,6 +23,7 @@ import org.cloudbus.cloudsim.core.SimEvent;
 import org.cloudbus.cloudsim.core.predicates.PredicateType;
 
 /**
+ * PowerDataCenter引入了更多的统计信息
  * PowerDatacenter is a class that enables simulation of power-aware data centers.
  * 
  * If you are using any algorithms, policies or workload included in the power package please cite
