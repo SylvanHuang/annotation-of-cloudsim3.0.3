@@ -17,6 +17,7 @@ public class UtilizationModelPlanetLabInMemory implements UtilizationModel {
 	
 	/**
 	 * Instantiates a new utilization model PlanetLab.
+	 * 从文件中载入云任务的占用资源率
 	 * 
 	 * @param inputPath the input path
 	 * @throws NumberFormatException the number format exception
