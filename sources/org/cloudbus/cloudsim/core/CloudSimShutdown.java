@@ -65,7 +65,7 @@ public class CloudSimShutdown extends SimEntity {
 	 */
 	@Override
 	public void processEvent(SimEvent ev) {
-		numUser--;
+		numUser--;	//一个终端用户结束，numUser减1
 		if (numUser == 0 || ev.getTag() == CloudSimTags.ABRUPT_END_OF_SIMULATION) {
 			CloudSim.abruptallyTerminate();
 		}

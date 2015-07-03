@@ -33,7 +33,7 @@ import org.cloudbus.cloudsim.provisioners.RamProvisioner;
  */
 public class PowerHost extends HostDynamicWorkload {
 
-	/** The power model. */
+	/** 物理机的能耗模型 The power model. */
 	private PowerModel powerModel;
 
 	/**

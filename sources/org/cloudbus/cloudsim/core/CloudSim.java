@@ -36,10 +36,10 @@ import org.cloudbus.cloudsim.core.predicates.PredicateNone;
  */
 public class CloudSim {
 
-	/** The Constant CLOUDSIM_VERSION_STRING. */
+	/** 版本号The Constant CLOUDSIM_VERSION_STRING. */
 	private static final String CLOUDSIM_VERSION_STRING = "3.0";
 
-	/** The id of CIS entity. */
+	/** CIS的id The id of CIS entity. */
 	private static int cisId = -1;
 
 	/** The id of CloudSimShutdown entity. */
