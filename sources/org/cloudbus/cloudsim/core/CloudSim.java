@@ -321,7 +321,7 @@ public class CloudSim {
 	/** 模拟计时时钟, 在CloudSim.processEvent()有更新时钟The simulation clock. */
 	private static double clock;
 
-	/** Flag for checking if the simulation is running. */
+	/** 运行标记为，避免Cloudsim同时执行两次模拟 Flag for checking if the simulation is running. */
 	private static boolean running;
 
 	/** The entities by name. */

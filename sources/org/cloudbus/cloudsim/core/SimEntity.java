@@ -35,7 +35,7 @@ import org.cloudbus.cloudsim.core.predicates.Predicate;
  */
 public abstract class SimEntity implements Cloneable {
 
-	/** The name. */
+	/** 实体名字The name. */
 	private String name;
 
 	/** The id. */
