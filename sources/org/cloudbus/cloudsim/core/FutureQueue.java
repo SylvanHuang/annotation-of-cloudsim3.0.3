@@ -28,7 +28,7 @@ public class FutureQueue {
 	/** 有序队列，总是先取出时间最小的事件进行执行 The sorted set. */
 	private final SortedSet<SimEvent> sortedSet = new TreeSet<SimEvent>();
 
-	/** The serial. */
+	/** 事件序列号，一次从零开始自增 The serial. */
 	private long serial = 0;
 
 	/**

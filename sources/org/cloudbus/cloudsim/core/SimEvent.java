@@ -38,7 +38,7 @@ public class SimEvent implements Cloneable, Comparable<SimEvent> {
 
 	/** 事件携带的数据 any data the event is carrying **/
 	private final Object data;
-
+	/** 事件序号，在FutureQueue队列中被设置的，是从0开始递增的*/
 	private long serial = -1;
 
 	// Internal event types
