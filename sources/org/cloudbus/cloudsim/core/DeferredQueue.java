@@ -25,15 +25,16 @@ import java.util.ListIterator;
  */
 public class DeferredQueue {
 
-	/** The list. */
+	/** 注意延迟队列是一个列表 The list. */
 	private final List<SimEvent> list = new LinkedList<SimEvent>();
 
-	/** The max time. */
+	/** 列表中的事件，最大的执行时钟 The max time. */
 	private double maxTime = -1;
 
 	/**
 	 * Adds a new event to the queue. Adding a new event to the queue preserves the temporal order
 	 * of the events.
+	 * 将事件加入延迟队列，但是会保证他在时间上有序的
 	 * 
 	 * @param newEvent The event to be added to the queue.
 	 */
@@ -53,7 +54,7 @@ public class DeferredQueue {
 			event = iterator.next();
 			if (event.eventTime() > eventTime) {
 				iterator.previous();
-				iterator.add(newEvent);
+				iterator.add(newEvent);	//保证在事件在执行时间上面是有序的
 				return;
 			}
 		}
