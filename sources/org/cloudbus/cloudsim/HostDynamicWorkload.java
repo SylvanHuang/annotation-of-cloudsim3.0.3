@@ -30,6 +30,12 @@ public class HostDynamicWorkload extends Host {
 
 	/** The previous utilization mips. */
 	private double previousUtilizationMips;
+	
+	/** The utilization Ram. */
+	private int utilizationRam;
+
+	/** The previous utilization Ram. */
+	private int previousUtilizationRam;
 
 	/** The state history. */
 	private final List<HostStateHistoryEntry> stateHistory = new LinkedList<HostStateHistoryEntry>();
@@ -256,6 +262,69 @@ public class HostDynamicWorkload extends Host {
 		return previousUtilizationMips;
 	}
 
+	//以下为MEM使用情况
+	/**
+	 * Get current utilization of memory in percentage.
+	 * 内存百分比
+	 * 
+	 * @return current utilization of memory in percents
+	 */	
+	public double getUtilizationOfMem() {
+		double utilization = (double)getUtilizationRam() / (double)getRam();
+		if (utilization > 1 && utilization < 1.01) {
+			utilization = 1;
+		}
+		return utilization;
+	}
+	
+	/**
+	 * Gets the previous utilization of memory in percentage.
+	 * 内存百分比
+	 * 
+	 * @return the previous utilization of memory
+	 */
+	public double getPreviousUtilizationOfMem() {
+		double utilization = (double)getPreviousUtilizationRam()  /(double) getRam();
+		if (utilization > 1 && utilization < 1.01) {
+			utilization = 1;
+		}
+		return utilization;
+	}
+
+	/**
+	 * Gets the utilization of memroy in bytes.
+	 * 
+	 * @return the utilization Ram
+	 */
+	public int getUtilizationRam() {
+		return utilizationRam;
+	}
+
+	/**
+	 * Sets the utilization of memroy in bytes.
+	 * 
+	 * @param utilizationRam the new utilization of memroy in bytes
+	 */	
+	protected void setUtilizationRam(int utilizationRam) {
+		// TODO Auto-generated method stub	
+		this.utilizationRam = utilizationRam;
+	}
+	
+	/**
+	 * Gets the previous utilization of memroy in bytes.
+	 * 
+	 * @return the previous utilization Ram
+	 */
+	public int getPreviousUtilizationRam() {
+		return previousUtilizationRam;
+	}
+	
+	protected void setPreviousUtilizationRam(int previousUtilizationRam) {
+		// TODO Auto-generated method stub
+		this.previousUtilizationRam = previousUtilizationRam;
+	}
+
+	
 	/**
 	 * Sets the previous utilization mips.
 	 * 

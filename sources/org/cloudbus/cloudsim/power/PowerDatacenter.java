@@ -200,10 +200,18 @@ public class PowerDatacenter extends Datacenter {
 			for (PowerHost host : this.<PowerHost> getHostList()) {
 				double previousUtilizationOfCpu = host.getPreviousUtilizationOfCpu();
 				double utilizationOfCpu = host.getUtilizationOfCpu();
+				double previousUtilizationOfMem = host.getPreviousUtilizationOfMem();
+				double utilizationOfMem = host.getUtilizationOfMem();
 				double timeFrameHostEnergy = host.getEnergyLinearInterpolation(
 						previousUtilizationOfCpu,
 						utilizationOfCpu,
+						previousUtilizationOfMem,
+						utilizationOfMem,
 						timeDiff);
+//				double timeFrameHostEnergy = host.getEnergyLinearInterpolation(
+//						previousUtilizationOfCpu,
+//						utilizationOfCpu,
+//						timeDiff);
 				timeFrameDatacenterEnergy += timeFrameHostEnergy;
 
 				Log.printLine();

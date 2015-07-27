@@ -21,6 +21,7 @@ import org.cloudbus.cloudsim.HostDynamicWorkload;
 import org.cloudbus.cloudsim.Log;
 import org.cloudbus.cloudsim.Vm;
 import org.cloudbus.cloudsim.core.CloudSim;
+import org.cloudbus.cloudsim.examples.power.Constants;
 import org.cloudbus.cloudsim.power.lists.PowerVmList;
 import org.cloudbus.cloudsim.util.ExecutionTimeMeasurer;
 
@@ -43,6 +44,9 @@ public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAl
 
 	/** 虚拟机选择策略 The vm selection policy. */
 	private PowerVmSelectionPolicy vmSelectionPolicy;
+	
+	/** The policy of vm placement in host, for example: BestPower, FirstResource, BestResource and so on. **/
+	private String findHostPolicy = "";
 
 	/** The saved allocation. */
 	private final List<Map<String, Object>> savedAllocation = new ArrayList<Map<String, Object>>();
@@ -79,8 +83,17 @@ public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAl
 			PowerVmSelectionPolicy vmSelectionPolicy) {
 		super(hostList);
 		setVmSelectionPolicy(vmSelectionPolicy);
+		setFindHostPolicy(Constants.findHostPolicy);
 	}
 
+	
+	public String getFindHostPolicy() {
+		return findHostPolicy;
+	}
+	
+	public void setFindHostPolicy(String findHostPolicy) {
+		this.findHostPolicy = findHostPolicy;
+	}
 	/**
 	 * 在PowerDatacenter.updateCloudletProcessing()函数中被调用
 	 * Algorithm 1：VM Placement Optimization
@@ -222,6 +235,22 @@ public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAl
 	 * @return the power host
 	 */
 	public PowerHost findHostForVm(Vm vm, Set<? extends Host> excludedHosts) {
+ 		if ("BestPower".equals(getFindHostPolicy())) {
+ 			return findHostForVmBestPower(vm, excludedHosts);
+ 		} else {
+ 			System.out.println("error: There is no " + getFindHostPolicy() + " policy.");
+ 			System.exit(0);
+ 		}
+		return null;
+	}
+	/**
+	 * Find host for vm best power.
+	 * 
+	 * @param vm the vm
+	 * @param excludedHosts the excluded hosts
+	 * @return the power host
+	 */
+	public PowerHost findHostForVmBestPower(Vm vm, Set<? extends Host> excludedHosts) {
  		double minPower = Double.MAX_VALUE;
 		PowerHost allocatedHost = null;
 
@@ -552,7 +581,8 @@ public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAl
 	protected double getPowerAfterAllocation(PowerHost host, Vm vm) {
 		double power = 0;
 		try {// 通过
-			power = host.getPowerModel().getPower(getMaxUtilizationAfterAllocation(host, vm));
+			power = host.getPowerModel().getPower(getMaxUtilizationCpuAfterAllocation(host, vm),getMaxUtilizationMemAfterAllocation(host, vm));
+//			power = host.getPowerModel().getPower(getMaxUtilizationAfterAllocation(host, vm));
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(0);
@@ -577,6 +607,45 @@ public abstract class PowerVmAllocationPolicyMigrationAbstract extends PowerVmAl
 		return pePotentialUtilization;
 	}
 	
+	/**
+	 * Gets the power after allocation. We assume that load is balanced between PEs. The only
+	 * restriction is: VM's max MIPS < PE's MIPS
+	 * 
+	 * @param host the host
+	 * @param vm the vm
+	 * 
+	 * @return the power after allocation
+	 */
+	protected double getMaxUtilizationCpuAfterAllocation(PowerHost host, Vm vm) {
+		double requestedTotalMips = vm.getCurrentRequestedTotalMips();
+		double hostUtilizationMips = host.getUtilizationOfCpuMips();
+		for (Vm vm2 : host.getVmList()) {
+			if (host.getVmsMigratingIn().contains(vm2)) {
+				// calculate additional potential CPU usage of a migrating in VM
+				// 只分配了10％的计算能力，所以要分配回来
+				hostUtilizationMips += host.getTotalAllocatedMipsForVm(vm2) * 0.9 / 0.1;
+			}
+		}
+		double hostPotentialUtilizationMips = hostUtilizationMips + requestedTotalMips;
+		double pePotentialUtilization = hostPotentialUtilizationMips / host.getTotalMips();
+		return pePotentialUtilization;
+	}
+	
+	protected double getMaxUtilizationMemAfterAllocation(PowerHost host, Vm vm) {
+		double requestedTotalRam = vm.getCurrentRequestedRam();
+		double hostUtilizationRam = host.getUtilizationOfRam();
+
+		for (Vm vm2 : host.getVmList()) {
+			if (host.getVmsMigratingIn().contains(vm2)) {
+				// calculate additional potential CPU usage of a migrating in VM
+				// 没有针对迁移机器预分配
+				hostUtilizationRam += vm.getCurrentAllocatedRam();
+			}
+		}
+		double hostPotentialUtilizationRam = hostUtilizationRam + requestedTotalRam;
+		double ramPotentialUtilization = hostPotentialUtilizationRam / host.getRam();
+		return ramPotentialUtilization;
+	}
 	/**
 	 * Gets the utilization of the CPU in MIPS for the current potentially allocated VMs.
 	 *

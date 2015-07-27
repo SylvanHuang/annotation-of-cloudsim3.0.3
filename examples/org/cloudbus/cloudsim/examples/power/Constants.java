@@ -1,8 +1,10 @@
 package org.cloudbus.cloudsim.examples.power;
 
 import org.cloudbus.cloudsim.power.models.PowerModel;
+import org.cloudbus.cloudsim.power.models.PowerModelMy;
 import org.cloudbus.cloudsim.power.models.PowerModelSpecPowerHpProLiantMl110G4Xeon3040;
 import org.cloudbus.cloudsim.power.models.PowerModelSpecPowerHpProLiantMl110G5Xeon3075;
+import org.cloudbus.cloudsim.power.models.PowerModelZF;
 
 /**
  * Power中需要使用的常量
@@ -28,6 +30,8 @@ public class Constants {
 	public final static int CLOUDLET_LENGTH	= 2500 * (int) SIMULATION_LIMIT;
 	public final static int CLOUDLET_PES	= 1;
 
+	
+	public final static String findHostPolicy = "BestPower";
 	/*
 	 * VM instance types:
 	 *   High-Memory Extra Large Instance: 3.25 EC2 Compute Units, 8.55 GB // too much MIPS
@@ -59,8 +63,10 @@ public class Constants {
 	public final static int HOST_STORAGE = 1000000; // 1 GB
 
 	public final static PowerModel[] HOST_POWER = {
-		new PowerModelSpecPowerHpProLiantMl110G4Xeon3040(),
-		new PowerModelSpecPowerHpProLiantMl110G5Xeon3075()
+//		new PowerModelSpecPowerHpProLiantMl110G4Xeon3040(),
+//		new PowerModelSpecPowerHpProLiantMl110G5Xeon3075()
+		new PowerModelMy(),
+		new PowerModelZF()
 	};
 
 }

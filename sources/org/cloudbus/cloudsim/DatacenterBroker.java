@@ -244,6 +244,7 @@ public class DatacenterBroker extends SimEntity {
 		} else {
 			// all the acks received, but some VMs were not created
 			if (getVmsRequested() == getVmsAcks()) {
+				/* 如果在前一个数据中心，创建VM失败，那么我们会选择在下一个数据中心中创建，这就是多数据中心创建的方法*/
 				// find id of the next datacenter that has not been tried
 				for (int nextDatacenterId : getDatacenterIdsList()) {
 					if (!getDatacenterRequestedIdsList().contains(nextDatacenterId)) {
@@ -316,6 +317,7 @@ public class DatacenterBroker extends SimEntity {
 	 * 
 	 * @param datacenterId Id of the chosen PowerDatacenter
 	 * @pre $none
+	 * 
 	 * @post $none
 	 */
 	protected void createVmsInDatacenter(int datacenterId) {

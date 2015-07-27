@@ -22,7 +22,7 @@ package org.cloudbus.cloudsim.power.models;
  * @author Anton Beloglazov
  * @since CloudSim Toolkit 2.0
  */
-public class PowerModelSquare implements PowerModel {
+public class PowerModelSquare extends PowerModel {
 
 	/** The max power. */
 	private double maxPower;

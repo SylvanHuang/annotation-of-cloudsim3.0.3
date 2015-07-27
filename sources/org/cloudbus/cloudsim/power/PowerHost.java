@@ -64,7 +64,8 @@ public class PowerHost extends HostDynamicWorkload {
 	 * @return the power
 	 */
 	public double getPower() {
-		return getPower(getUtilizationOfCpu());
+		return getPower(getUtilizationOfCpu(), getUtilizationOfRam());
+//		return getPower(getUtilizationOfCpu());
 	}
 
 	/**
@@ -84,6 +85,16 @@ public class PowerHost extends HostDynamicWorkload {
 		return power;
 	}
 
+	protected double getPower(double utilizationCpu, double utilizationMem) {
+		double power = 0;
+		try {
+			power = getPowerModel().getPower(utilizationCpu, utilizationMem);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.exit(0);
+		}
+		return power;
+	}
 	/**
 	 * Gets the max power that can be consumed by the host.
 	 * 
@@ -92,7 +103,8 @@ public class PowerHost extends HostDynamicWorkload {
 	public double getMaxPower() {
 		double power = 0;
 		try {
-			power = getPowerModel().getPower(1);
+			power = getPowerModel().getPower(1, 1);
+//			power = getPowerModel().getPower(1);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(0);
@@ -117,6 +129,19 @@ public class PowerHost extends HostDynamicWorkload {
 		return (fromPower + (toPower - fromPower) / 2) * time;
 	}
 
+	public double getEnergyLinearInterpolation(
+			double fromUtilizationCpu, 
+			double toUtilizationCpu,
+			double fromUtilizationMem, 
+			double toUtilizationMem, 
+			double time) {
+		if (fromUtilizationCpu == 0) {
+			return 0;
+		}
+		double fromPower = getPower(fromUtilizationCpu,fromUtilizationMem);
+		double toPower = getPower(toUtilizationCpu,toUtilizationMem);
+		return (fromPower + (toPower - fromPower) / 2) * time;
+	}
 	/**
 	 * Sets the power model.
 	 * 

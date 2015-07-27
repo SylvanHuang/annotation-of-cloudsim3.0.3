@@ -25,7 +25,7 @@ package org.cloudbus.cloudsim.power.models;
  * @author Anton Beloglazov
  * @since CloudSim Toolkit 2.0
  */
-public interface PowerModel {
+public abstract class  PowerModel {
 
 	/**
 	 * Get power consumption by the utilization percentage according to the power model.
@@ -34,6 +34,9 @@ public interface PowerModel {
 	 * @return power consumption
 	 * @throws IllegalArgumentException the illegal argument exception
 	 */
-	double getPower(double utilization) throws IllegalArgumentException;
+	public abstract double getPower(double utilization) throws IllegalArgumentException;
 
+	public double getPower(double utilizationCpu, double utilizationMem) throws IllegalArgumentException {
+			return 0.0;
+	}
 }
