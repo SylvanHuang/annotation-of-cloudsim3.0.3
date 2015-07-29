@@ -46,7 +46,7 @@ public class DatacenterBroker extends SimEntity {
 	/** The cloudlet received list. */
 	protected List<? extends Cloudlet> cloudletReceivedList;
 
-	/** 统计云任务提交次数The cloudlets submitted. */
+	/** 统计云任务提交次数,提交一个云任务+1，执行完一个云任务-1 The cloudlets submitted. */
 	protected int cloudletsSubmitted;
 
 	/** 虚拟机创建请求次数统计 The vms requested. */
@@ -64,7 +64,7 @@ public class DatacenterBroker extends SimEntity {
 	/** 收到虚拟机创建请求的数据中心列表 The datacenter requested ids list. */
 	protected List<Integer> datacenterRequestedIdsList;
 
-	/** 虚拟机和所在的数据中心map的对应关系表 The vms to datacenters map. */
+	/** 表示已经创建成功的虚拟机和所在的数据中心map的对应关系表 The vms to datacenters map. */
 	protected Map<Integer, Integer> vmsToDatacentersMap;
 
 	/** The datacenter characteristics list. */
@@ -122,6 +122,14 @@ public class DatacenterBroker extends SimEntity {
 		getCloudletList().addAll(list);
 	}
 
+	/**
+	 * Specifies that a given vm must run in a specific datacenter.
+	 * @param vmId
+	 * @param datacenterId
+	 */
+	public void bindVmToDatacenter(int vmId, int datacenterId) {
+		VmList.getById(getVmList(), vmId).setDatacenterId(datacenterId);
+	}
 	/**
 	 * Specifies that a given cloudlet must run in a specific virtual machine.
 	 * 
@@ -188,7 +196,7 @@ public class DatacenterBroker extends SimEntity {
 		if (getDatacenterCharacteristicsList().size() == getDatacenterIdsList().size()) {
 			setDatacenterRequestedIdsList(new ArrayList<Integer>());
 			//知道了数据中心的信息后，就可以开心创建虚拟机了
-			createVmsInDatacenter(getDatacenterIdsList().get(0));
+			createVmsInDatacenter();
 		}
 	}
 
@@ -277,7 +285,8 @@ public class DatacenterBroker extends SimEntity {
 		getCloudletReceivedList().add(cloudlet);
 		Log.printLine(CloudSim.clock() + ": " + getName() + ": Cloudlet " + cloudlet.getCloudletId()
 				+ " received");
-		cloudletsSubmitted--;
+		cloudletsSubmitted--;//执行完一个云任务-1
+		//等待提交的云任务为零，并且正在执行的云任务为零
 		if (getCloudletList().size() == 0 && cloudletsSubmitted == 0) { // all cloudlets executed
 			Log.printLine(CloudSim.clock() + ": " + getName() + ": All Cloudlets executed. Finishing...");
 			// 任务执行完成，销毁数据中心，其中包括销毁虚拟机
@@ -288,7 +297,7 @@ public class DatacenterBroker extends SimEntity {
 				// all the cloudlets sent finished. It means that some bount
 				// cloudlet is waiting its VM be created
 				clearDatacenters();
-				createVmsInDatacenter(0);
+				createVmsInDatacenter();
 			}
 
 		}
@@ -320,6 +329,40 @@ public class DatacenterBroker extends SimEntity {
 	 * 
 	 * @post $none
 	 */
+	protected void createVmsInDatacenter() {
+		// send as much vms as possible for this datacenter before trying the next one
+		int requestedVms = 0;
+		int datacenterIndex = 0;
+		String datacenterName = "";
+		int datacenterId = 0;
+		for (Vm vm : getVmList()) {
+			//如果vm存在于vmsToDatacenterMap中，说明虚拟机已经在相应的数据中心成功创建了
+			if (!getVmsToDatacentersMap().containsKey(vm.getId())) {
+				if (-1 != datacenterId) {
+					/*如果vm绑定了数据中心*/
+					datacenterId = vm.getDatacenterId();
+					datacenterName = CloudSim.getEntityName(datacenterId);
+				} else {
+					/*如果vm没有绑定数据中心，则在所有的数据中心轮流选择一个*/
+					datacenterId = getDatacenterIdsList().get(datacenterIndex);
+					datacenterName = CloudSim.getEntityName(datacenterId);
+					datacenterIndex = (datacenterIndex + 1) % getDatacenterIdsList().size();
+				}
+				
+				/**/
+				Log.printLine(CloudSim.clock() + ": " + getName() + ": Trying to Create VM #" + vm.getId()
+						+ " in " + datacenterName);
+				sendNow(datacenterId, CloudSimTags.VM_CREATE_ACK, vm);
+				requestedVms++;
+			}
+		}
+
+		getDatacenterRequestedIdsList().add(datacenterId);
+
+		setVmsRequested(requestedVms);
+		setVmsAcks(0);
+	}
+	
 	protected void createVmsInDatacenter(int datacenterId) {
 		// send as much vms as possible for this datacenter before trying the next one
 		int requestedVms = 0;

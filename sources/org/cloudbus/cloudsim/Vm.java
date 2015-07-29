@@ -54,6 +54,16 @@ public class Vm {
 
 	/** The host. */
 	private Host host;
+	
+	private int datacenterId;
+
+	public int getDatacenterId() {
+		return datacenterId;
+	}
+
+	public void setDatacenterId(int datacenterId) {
+		this.datacenterId = datacenterId;
+	}
 
 	/**虚拟机是否正在迁移  In migration flag. */
 	private boolean inMigration;
@@ -133,6 +143,7 @@ public class Vm {
 		setCurrentAllocatedMips(null);
 		setCurrentAllocatedRam(0);
 		setCurrentAllocatedSize(0);
+		setDatacenterId(-1);
 	}
 
 	/**

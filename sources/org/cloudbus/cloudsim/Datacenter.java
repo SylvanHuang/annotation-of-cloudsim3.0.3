@@ -724,6 +724,7 @@ public class Datacenter extends SimEntity {
 			// time to transfer the files
 			double fileTransferTime = predictFileTransferTime(cl.getRequiredFiles());
 
+			// 云任务提交的时候，VM机已经创建好了
 			Host host = getVmAllocationPolicy().getHost(vmId, userId);
 			Vm vm = host.getVm(vmId, userId);//拿到相应的虚拟机
 			CloudletScheduler scheduler = vm.getCloudletScheduler();//取出相应虚拟机的CloudletScheduler的

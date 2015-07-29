@@ -132,6 +132,9 @@ public class CloudSimExample4 {
 			broker.bindCloudletToVm(cloudlet1.getCloudletId(),vm1.getId());
 			broker.bindCloudletToVm(cloudlet2.getCloudletId(),vm2.getId());
 
+			broker.bindVmToDatacenter(vm1.getId(), datacenter1.getId());
+			broker.bindVmToDatacenter(vm2.getId(), datacenter1.getId());
+
 			// Sixth step: Starts the simulation
 			CloudSim.startSimulation();
 
